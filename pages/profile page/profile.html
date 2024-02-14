@@ -1,93 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8"/>
         <title>Profile Registration</title>
+        <link rel="stylesheet" href="profile.css"/>
+        <script src="profile.js"></script>
     </head>
     <body>
-        <h1>Profile Form</h1>
-        <form>
-            <section>
-                <h2>Please fill in profile information to complete your account.</h2>
-                <p>
-                    <input type="text" id="first_name" name="first_name" placeholder="First Name" maxlength="25" required/>
-                </p>
-                <p>
-                    <input id="last_name" name="last_name" placeholder="Last Name" maxlength="50" required/>
-                </p>
-                <p>
-                    <input id="address1" name="address1" placeholder="Address (required)" maxlength="100" required/>
-                </p>
-                <p>
-                    <input id="address2" name="address2" placeholder="Address (optional)" maxlength="100"/>
-                </p>
-                <p>
-                    <input id="city" name="city" placeholder="City" maxlength="100" required/>
-                </p>
-                <p>
-                    <label for="state">
-                        <span>State:</span>
-                    </label>
-                    <select>
-                        <option value="AL">AL</option>
-                        <option value="AK">AK</option>
-                        <option value="AR">AR</option>
-                        <option value="AZ">AZ</option>
-                        <option value="CA">CA</option>
-                        <option value="CO">CO</option>
-                        <option value="CT">CT</option>
-                        <option value="DC">DC</option>
-                        <option value="DE">DE</option>
-                        <option value="FL">FL</option>
-                        <option value="GA">GA</option>
-                        <option value="HI">HI</option>
-                        <option value="IA">IA</option>
-                        <option value="ID">ID</option>
-                        <option value="IL">IL</option>
-                        <option value="IN">IN</option>
-                        <option value="KS">KS</option>
-                        <option value="KY">KY</option>
-                        <option value="LA">LA</option>
-                        <option value="MA">MA</option>
-                        <option value="MD">MD</option>
-                        <option value="ME">ME</option>
-                        <option value="MI">MI</option>
-                        <option value="MN">MN</option>
-                        <option value="MO">MO</option>
-                        <option value="MS">MS</option>
-                        <option value="MT">MT</option>
-                        <option value="NC">NC</option>
-                        <option value="NE">NE</option>
-                        <option value="NH">NH</option>
-                        <option value="NJ">NJ</option>
-                        <option value="NM">NM</option>
-                        <option value="NV">NV</option>
-                        <option value="NY">NY</option>
-                        <option value="ND">ND</option>
-                        <option value="OH">OH</option>
-                        <option value="OK">OK</option>
-                        <option value="OR">OR</option>
-                        <option value="PA">PA</option>
-                        <option value="RI">RI</option>
-                        <option value="SC">SC</option>
-                        <option value="SD">SD</option>
-                        <option value="TN">TN</option>
-                        <option value="TX">TX</option>
-                        <option value="UT">UT</option>
-                        <option value="VT">VT</option>
-                        <option value="VA">VA</option>
-                        <option value="WA">WA</option>
-                        <option value="WI">WI</option>
-                        <option value="WV">WV</option>
-                        <option value="WY">WY</option>
-                    </select>
-                </p>
-                <p>
-                    <input id="zip_code" name="zip_code" placeholder="Zip Code" minlength="5" max="9" required/>
-                </p>
-                <p>
-                    <input type="submit" value="Submit"/>
-                </p>
-            </section>
-        </form>
+        <h2>Profile</h2>
+        <div class="text-center">
+            <h3 class="text-center">Welcome, please choose an option</h3>
+            <form action="../home page/home.html">
+                <button type="submit">New Quote</button>
+            </form>
+            <form action="../fuel quote form page/fuel quote history/fuelquotehistory.html">
+                <button type="submit">Fuel Quote History</button>
+            </form>
+        </div>
     </body>
 </html>
