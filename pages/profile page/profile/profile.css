@@ -2,6 +2,7 @@ body {
     background-attachment: fixed;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     margin: 10;
+    font-size: 1.2em;
 }
 
 h1 {
@@ -34,4 +35,13 @@ table {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
+    border-collapse: separate;
+    border-spacing: 1em 1em;
+}
+
+table.text-center td:first-child {
+    background-color: #d2eaff;
+    padding: .3em .5em;
+    border-radius: .3em;
+    color: black;
 }
