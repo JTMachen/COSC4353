@@ -1,0 +1,15 @@
+body{
+    background-color: rgb(227, 176, 45);
+}
+h5{
+    font-style: italic;
+}
+form{
+    text-align: center;
+    background-color: rgb(255, 255, 255,.6);
+    border-style: outset;
+    border-width: 5px;
+    border-radius: 20px;
+    width: 450px;
+    margin: 190px auto;
+}
