@@ -1,0 +1,33 @@
+h1{
+  text-align: center;
+  text-shadow: 4px 3px 8px;
+}
+h4{
+    font-style: italic;
+    margin-bottom: 0px;
+}
+.button{
+    margin-top: 60px;
+    text-align:center;
+    font-size: 30px;
+    width: 300px;
+    height: 310px;
+    background-color: rgb(227, 176, 45);
+    color: black;
+    border-radius: 50px;
+    border-width: 15px;
+    border-color: rgb(143, 90, 11);
+}
+#container{
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+
+}
+body{
+    background-color: rgb(227, 176, 45);
+}
+#fuelQ{
+    margin-left: 10px;
+}
