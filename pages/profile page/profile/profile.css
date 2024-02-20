@@ -9,6 +9,7 @@ h1 {
 }
 
 h2 {
+    background-color: #d2eaff;
     text-align: center;
 }
 
@@ -27,4 +28,10 @@ input {
 
 .text-center {
     text-align: center;
+}
+
+table {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
