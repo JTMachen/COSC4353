@@ -1,0 +1,41 @@
+{
+    "fields": [
+      {
+        "name": "gallonsRequested",
+        "label": "Gallons Requested",
+        "type": "number",
+        "placeholder": "Enter gallons requested",
+        "required": true
+      },
+      {
+        "name": "deliveryAddress",
+        "label": "Delivery Address",
+        "type": "text",
+        "placeholder": "Enter delivery address",
+        "readonly": true,
+        "defaultValue": "123 Main St, City, State"
+      },
+      {
+        "name": "deliveryDate",
+        "label": "Delivery Date",
+        "type": "date",
+        "placeholder": "Select delivery date",
+        "required": true
+      },
+      {
+        "name": "suggestedPrice",
+        "label": "Suggested Price / gallon",
+        "type": "number",
+        "placeholder": "Price per gallon",
+        "readonly": true
+      },
+      {
+        "name": "totalAmountDue",
+        "label": "Total Amount Due",
+        "type": "number",
+        "placeholder": "Total amount",
+        "readonly": true
+      }
+    ]
+  }
+  
