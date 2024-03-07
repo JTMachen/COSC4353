@@ -21,7 +21,11 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            if (data.success) {
+                window.location.href = '/pages/home page/home.html';
+            } else {
+                console.error('Login failed:', data.message);
+            }
         })
         .catch(error => {
             console.error('Error:', error);
