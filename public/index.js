@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => response.json())
         .then(data => {
-            // handle the response data, such as showing a message or redirecting the user
             console.log(data);
         })
         .catch(error => {
