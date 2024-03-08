@@ -1,8 +1,8 @@
 $(document).ready(function() {
     // Function to fetch fuel quote history using AJAX
-    function fetchFuelQuoteHistory() {
+    function fetchFuelQuoteForm() {
         $.ajax({
-            url: '/fuelquotehistory', 
+            url: '/fuelquoteform', 
             type: 'GET',
             success: function(data) {
                 data.forEach(function(quote) {
@@ -15,7 +15,7 @@ $(document).ready(function() {
             }
         });
     }
-    fetchFuelQuoteHistory();
+    fetchFuelQuoteForm();
     // Add submit event listener to the form
     $('#fuelQuoteForm').submit(function(event) {
         event.preventDefault(); 
