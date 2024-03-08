@@ -46,9 +46,6 @@ input[type="submit"] {
     cursor: pointer;
 }
 
-input[type="submit"]:hover {
-    background-color: #45a049;
-}
 
 table {
     width: 94%;
@@ -56,12 +53,6 @@ table {
     margin: 0 auto;
 }
 
-td {
-    padding: 1vw;
-    padding-bottom: 2vh;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
 
 th {
     padding: 1.4vw;
