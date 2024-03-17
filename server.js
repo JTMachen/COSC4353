@@ -19,6 +19,65 @@ app.get('/fuelquotehistory', (req, res) => {
     });
 });
 
+// route to handle login requests
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+
+    fs.readFile('users.json', 'utf8', (err, data) => {
+        if (err) {
+            res.status(500).json({ success: false, message: 'Error reading user data' });
+            return;
+        }
+
+        let userData = JSON.parse(data);
+        const user = userData.find(user => user.username === username && user.password === password);
+
+        if (!user) {
+            res.status(401).json({ success: false, message: 'Invalid username or password' });
+            return;
+        }
+
+        // login successful, redirect to the home page
+        res.json({ success: true, message: 'Login successful', redirectTo: '/public/pages/home page/home.html' });
+
+    });
+});
+
+// route to handle initial register requests
+app.post('/initial_register', (req, res) => {
+    const { username, password } = req.body;
+
+    // read existing user data form users.json
+    fs.readFile('users.json', 'utf8', (err, data) => {
+        if (err) {
+            res.status(500).json({ success: false, message: 'Error reading user data' });
+            return;
+        }
+
+        let userData = JSON.parse(data);
+
+        // check if the username already exists
+        if(userData.find(user => user.username === username)){
+            res.status(400).json({ success: false, message: 'Username already exists'});
+            return;
+        }
+
+        // add the new user to userData
+        userData.push({ username, password});
+
+        // write the updated user data back to users.json
+        fs.writeFile('users.json', JSON.stringify(userData, null, 2), err => {
+            if (err) {
+                res.status(500).json({ success: false, message: 'Error writing user data'});
+                return;
+            }
+
+            // successful, redirect to the profile registration page
+            res.json({ success: true, message: 'User registered successfully', redirectTo: '/pubilc/pages/profile page/registration/registration.html' });
+        });
+    });
+});
+
 
 //Serve static files from the 'public' directory (where our HTML, CSS, Javascript files are)
 app.use(express.static('public'));
