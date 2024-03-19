@@ -26,6 +26,7 @@ function prepareData() {
         alert("Please enter a valid Zip Code");
         return;
     }
+    
     // Data to be sent to the server if all validation passes
     var data = {
         "Full Name": fullName,

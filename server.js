@@ -67,11 +67,6 @@ app.post('/initial_register', (req, res) => {
     });
 });
 
-//Serve static files from the 'public' directory (where our HTML, CSS, Javascript files are)
-app.use(express.static('public'));
-
-
-
 app.post('/fuelquoteform', (req, res) => {
     const formData = req.body; 
 
@@ -89,6 +84,8 @@ app.post('/fuelquoteform', (req, res) => {
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
 });
+
+//Serve static files from the 'public' directory (where our HTML, CSS, Javascript files are)
 app.use(express.static('public'));
 
 //Start server
