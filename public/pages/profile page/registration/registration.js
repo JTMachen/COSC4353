@@ -1,30 +1,30 @@
 function prepareData() {
     // Validate the data on the backend
-    let fullName = document.getElementById("name").innerHTML;
-    if (fullName.length > 50) {
+    let fullName = document.getElementById("name").value;
+    if (fullName.length > 50 || fullName.length == 0) {
         alert("Invalid Name field. Please try again.");
-        return;
+        return false;
     }
-    let address1 = document.getElementById("address1").innerHTML;
-    if (address1.length > 100) {
+    let address1 = document.getElementById("address1").value;
+    if (address1.length > 100 || address1.length == 0) {
         alert("Invalid Address 1 field. Please try again.");
-        return;
+        return false;
     }
-    let address2 = document.getElementById("address2").innerHTML;
+    let address2 = document.getElementById("address2").value;
     if (address2.length > 100) {
         alert("Invalid Address 2 field. Please try again.");
-        return;
+        return false;
     }
-    let city = document.getElementById("city").innerHTML;
-    if (city.length > 100) {
+    let city = document.getElementById("city").value;
+    if (city.length > 100 || city.length == 0) {
         alert("Invalid City field. Please try again.");
-        return;
+        return false;
     }
-    let state = document.getElementById("state").innerHTML;
-    let zipCode = document.getElementById("zip_code").innerHTML;
-    if (zipCode.match(/^[0-9]+$/)) {
+    let state = document.getElementById("state").value;
+    let zipCode = document.getElementById("zip_code").value;
+    if (!/^\d*$/.test(parseInt(zipCode)) || zipCode.length < 5 || zipCode.length > 9) {
         alert("Please enter a valid Zip Code");
-        return;
+        return false;
     }
     // Data to be sent to the server if all validation passes
     var data = {
