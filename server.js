@@ -62,7 +62,7 @@ app.post('/initial_register', (req, res) => {
                 return;
             }
             // successful, redirect to the profile registration page
-            res.json({ success: true, message: 'User registered successfully', user: user, redirectTo: '/pubilc/pages/profile page/registration/registration.html' });
+            res.json({ success: true, message: 'User registered successfully', redirectTo: '/pubilc/pages/profile page/registration/registration.html' });
         });
     });
 });
