@@ -33,10 +33,25 @@ app.post('/login', (req, res) => {
             res.status(401).json({ success: false, message: 'Invalid username or password' });
             return;
         }
-        // login successful, redirect to the home page
-        res.json({ success: true, message: 'Login successful', user: user, redirectTo: '/public/pages/home page/home.html' });
+        // login successful, send back user data including username and address
+        const { fullName, address1, address2, city, state, zipcode } = user;
+        res.json({ 
+            success: true, 
+            message: 'Login successful', 
+            user: { 
+                username, 
+                fullName, 
+                address1, 
+                address2, 
+                city, 
+                state, 
+                zipcode 
+            }, 
+            redirectTo: '/public/pages/home.html' 
+        });
     });
 });
+
 
 // route to handle initial register requests
 app.post('/initial_register', (req, res) => {
