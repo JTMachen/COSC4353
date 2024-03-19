@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
+                // store user information in session storage
+                sessionStorage.setItem('registeredUser', JSON.stringify(formData));
                 window.location.href = '/pages/profile page/registration/registration.html';
             } else {
                 console.error('Registration failed:', data.message);
