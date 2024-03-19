@@ -70,11 +70,6 @@ app.post('/initial_register', (req, res) => {
 //Serve static files from the 'public' directory (where our HTML, CSS, Javascript files are)
 app.use(express.static('public'));
 
-//Start server
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
-
 
 
 app.post('/fuelquoteform', (req, res) => {
@@ -99,3 +94,10 @@ app.use(express.static('public'));
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+//Start server
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
+
+
+
