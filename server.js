@@ -74,3 +74,28 @@ app.use(express.static('public'));
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+
+
+app.post('/fuelquoteform', (req, res) => {
+    const formData = req.body; 
+
+    function handleFuelQuoteFormSubmission(formData) {
+
+        console.log('Received fuel quote form submission:', formData);
+        return { success: true, message: 'Fuel quote submitted successfully' };
+    }
+
+    try {
+        const result = handleFuelQuoteFormSubmission(formData);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error('Error handling fuel quote form submission:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+app.use(express.static('public'));
+
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
