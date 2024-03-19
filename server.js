@@ -34,7 +34,7 @@ app.post('/login', (req, res) => {
             return;
         }
         // login successful, redirect to the home page
-        res.json({ success: true, message: 'Login successful', redirectTo: '/public/pages/home page/home.html' });
+        res.json({ success: true, message: 'Login successful', user: user, redirectTo: '/public/pages/home page/home.html' });
     });
 });
 
@@ -67,6 +67,24 @@ app.post('/initial_register', (req, res) => {
     });
 });
 
+app.post('/fuelquoteform', (req, res) => {
+    const formData = req.body; 
+
+    function handleFuelQuoteFormSubmission(formData) {
+
+        console.log('Received fuel quote form submission:', formData);
+        return { success: true, message: 'Fuel quote submitted successfully' };
+    }
+
+    try {
+        const result = handleFuelQuoteFormSubmission(formData);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error('Error handling fuel quote form submission:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
 //Serve static files from the 'public' directory (where our HTML, CSS, Javascript files are)
 app.use(express.static('public'));
 
@@ -74,3 +92,6 @@ app.use(express.static('public'));
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+
+

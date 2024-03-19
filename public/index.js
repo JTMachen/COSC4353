@@ -23,10 +23,12 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             if (data.success) {
                 // store user information in session storage
+                console.log(data.user);
                 sessionStorage.setItem('loggedInUser', JSON.stringify(data.user));
+                console.log(sessionStorage.getItem('loggedInUser'));
 
                 // redirect to the home page
-                window.location.href = '/pages/home page/home.html';
+                //window.location.href = '/pages/home page/home.html';
             } else {
                 console.error('Login failed:', data.message);
             }
