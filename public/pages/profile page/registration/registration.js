@@ -2,24 +2,29 @@ function prepareData() {
     // Validate the data on the backend
     let fullName = document.getElementById("name").innerHTML;
     if (fullName.length > 50) {
-        alert("Invalid Name field. Please try again.")
+        alert("Invalid Name field. Please try again.");
+        return;
     }
     let address1 = document.getElementById("address1").innerHTML;
     if (address1.length > 100) {
-        alert("Invalid Address 1 field. Please try again.")
+        alert("Invalid Address 1 field. Please try again.");
+        return;
     }
     let address2 = document.getElementById("address2").innerHTML;
     if (address2.length > 100) {
-        alert("Invalid Address 2 field. Please try again.")
+        alert("Invalid Address 2 field. Please try again.");
+        return;
     }
     let city = document.getElementById("city").innerHTML;
     if (city.length > 100) {
-        alert("Invalid City field. Please try again.")
+        alert("Invalid City field. Please try again.");
+        return;
     }
     let state = document.getElementById("state").innerHTML;
     let zipCode = document.getElementById("zip_code").innerHTML;
-    if (!/^([0-9]{5})(?:[-\s]*([0-9]{4}))?$/.test(zipCode)) {
-        alert("Please enter a valid Zip Code")
+    if (zipCode.match(/^[0-9]+$/)) {
+        alert("Please enter a valid Zip Code");
+        return;
     }
     // Data to be sent to the server if all validation passes
     var data = {
