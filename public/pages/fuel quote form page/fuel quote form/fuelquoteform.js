@@ -1,14 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     function getUserInfoFromSession() {
-        console.log(sessionStorage.getItem('loggedInUser'));
         const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-        const registeredUser = JSON.parse(sessionStorage.getItem('registeredUser'));
         return loggedInUser || registeredUser;
     }
 
     function populateFormWithUserInfo(user) {
-        document.getElementById('username').value = user.username;
+        document.getElementById('deliveryAddress').value = user.address1; 
     }
+
     const userInfo = getUserInfoFromSession();
     if (userInfo) {
         populateFormWithUserInfo(userInfo);
