@@ -1,41 +1,32 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Retrieve user information from session storage
-    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-    const registeredUser = JSON.parse(sessionStorage.getItem('registeredUser'));
-
-    // If the user is logged in, populate the form with their information
-    if (loggedInUser) {
-        document.getElementById('username').value = loggedInUser.username;
-        // You may populate other fields if needed
+    function getUserInfoFromSession() {
+        const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+        const registeredUser = JSON.parse(sessionStorage.getItem('registeredUser'));
+        return loggedInUser || registeredUser;
     }
 
-    // If the user is registered but not logged in, you may use their registration data
-    if (registeredUser && !loggedInUser) {
-        document.getElementById('username').value = registeredUser.username;
-        // You may populate other fields if needed
+    function populateFormWithUserInfo(user) {
+        document.getElementById('username').value = user.username;
+    }
+    const userInfo = getUserInfoFromSession();
+    if (userInfo) {
+        populateFormWithUserInfo(userInfo);
     }
 
-    const fuelQuoteForm = document.querySelector('form');
+    const registrationForm = document.querySelector('form');
 
-    fuelQuoteForm.addEventListener('submit', function(event) {
+    registrationForm.addEventListener('submit', function(event) {
         event.preventDefault();
 
-        const gallonsRequested = document.getElementById('gallonsRequested').value;
-        const deliveryAddress = document.getElementById('deliveryAddress').value;
-        const deliveryDate = document.getElementById('deliveryDate').value;
-        const suggestedPrice = document.getElementById('suggestedPrice').value;
-        const totalAmountDue = document.getElementById('totalAmountDue').value;
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
 
         const formData = {
-            gallonsRequested: gallonsRequested,
-            deliveryAddress: deliveryAddress,
-            deliveryDate: deliveryDate,
-            suggestedPrice: suggestedPrice,
-            totalAmountDue: totalAmountDue,
-            // You may include user information in the form data if needed
+            username: username,
+            password: password
         };
 
-        fetch('/fuelquoteform', {
+        fetch('/initial_register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -45,16 +36,13 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                console.log('Fuel quote submitted successfully');
-                // Redirect or display success message as needed
+                window.location.href = '/login.html';
             } else {
-                console.error('Fuel quote submission failed:', data.message);
-                // Handle error response
+                console.error('Registration failed:', data.message);
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            // Handle network or other errors
         });
     });
 });
