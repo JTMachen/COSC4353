@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     function getUserInfoFromSession() {
+        console.log(sessionStorage.getItem('loggedInUser'));
         const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
         const registeredUser = JSON.parse(sessionStorage.getItem('registeredUser'));
         return loggedInUser || registeredUser;
