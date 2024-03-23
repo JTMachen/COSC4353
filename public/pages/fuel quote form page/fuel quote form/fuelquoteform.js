@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 $(document).ready(function() {
     // Function to fetch fuel quote history using AJAX
     function fetchFuelQuoteForm() {
@@ -15,13 +15,13 @@ $(document).ready(function() {
                 console.error('Error fetching fuel quote history:', error);
             }
         });  
-=======
+
 document.addEventListener('DOMContentLoaded', function() {
     // Fill delivery address with user info
     function getUserInfoFromSession() {
         const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
         return loggedInUser;
->>>>>>> 55b06bc23e976ac41b2fec064ec3210618de1853
+
     }
 
     function populateFormWithUserInfo(user) {
@@ -51,3 +51,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 });
+}
