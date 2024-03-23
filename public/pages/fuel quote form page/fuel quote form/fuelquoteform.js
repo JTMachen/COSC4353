@@ -13,7 +13,7 @@ $(document).ready(function() {
             error: function(xhr, status, error) {
                 console.error('Error fetching fuel quote history:', error);
             }
-        });
+        });  
     }
     fetchFuelQuoteForm();
     // Add submit event listener to the form
