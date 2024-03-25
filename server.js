@@ -153,6 +153,22 @@ app.post('/fuelquoteform', (req, res) => {
     }
 });
 
+// Logout route
+app.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+      if (err) {
+          console.error('Error destroying session:', err);
+          return res.status(500).json({ message: 'Internal server error' });
+      }
+      res.json({ success: true, message: 'Logged out successfully' });
+  });
+});
+
+// Protected route that requires login
+app.get('/protected', requireLogin, (req, res) => {
+  res.json({ message: 'You have access to protected data' });
+});
+
 //Serve static files from the 'public' directory (where our HTML, CSS, Javascript files are)
 app.use(express.static('public'));
 
