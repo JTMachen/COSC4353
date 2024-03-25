@@ -28,7 +28,10 @@ function prepareData() {
     }
     
     // Data to be sent to the server if all validation passes
-    var data = {
+    const currentUser = JSON.parse(sessionStorage.getItem('registeredUser'));
+    const username = currentUser.username;
+    var userData = {
+        "username": username,
         "Full Name": fullName,
         "Address 1": address1,
         "Address 2": address2,
@@ -36,5 +39,23 @@ function prepareData() {
         "State": state,
         "Zip Code": zipCode
     };
-    const dataJSON = JSON.stringify(data);
+    fetch('/registration', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = '/pages/profile page/home page/home.html';
+        }
+        else {
+            console.error('Registration failed: ', data.message);
+        }
+    })
+    .catch(error => {
+        console.error("Error: ", error);
+    });
 }

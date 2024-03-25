@@ -19,6 +19,20 @@ app.get('/fuelquotehistory', (req, res) => {
     });
 });
 
+// Access users JSON file
+app.get('/users', (req, res) => {
+    console.log('Recieved request');
+    fs.readFile('users.json', 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading users.JSON: ', err);
+            res.status(500).send('Error reading JSON file');
+            return;
+        }
+        const users = JSON.parse(data);
+        res.json(users);
+    });
+});
+
 // route to handle login requests
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
@@ -81,6 +95,51 @@ app.post('/initial_register', (req, res) => {
         });
     });
 });
+
+// Second registration handler
+app.post('/registration', (req, res) => {
+    const { username, fullName, address1, address2, city, state, zipCode } = req.body;
+    fs.readFile('users.json', 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading users.JSON: ', err);
+            res.status(500).send('Error reading JSON file');
+            return;
+        }
+
+        try {
+            let currentData = JSON.parse(data);
+            console.log(currentData);
+            const userToRegister = currentData.find(user => user.username === username);
+            if (userToRegister) {
+                userToRegister.fullName = fullName;
+                userToRegister.address1 = address1;
+                userToRegister.address2 = address2;
+                userToRegister.city = city;
+                userToRegister.state = state;
+                userToRegister.zipcode = zipCode;
+
+                const updatedData = JSON.stringify(currentData, null, 2);
+
+                fs.writeFile('users.json', updatedData, 'utf8', (writeErr) => {
+                    if (writeErr) {
+                        console.error('Error writing to users.json: ', writeErr);
+                        res.status(500).send('Error writing to JSON file');
+                        return;
+                    }
+                    console.log('User data updated successfully');
+                    res.json({ success: true, message: 'User data updated successfully' });
+                });
+            } else {
+                console.error("Username not found");
+                res.status(404).json({ success: false, message: 'Username not found'});
+            }
+        } catch (parseError) {
+            console.error('Error parsing JSON:', parseError);
+            res.status(500).send('Error parsing JSON');
+        }
+    });
+});
+
 
 app.post('/fuelquoteform', (req, res) => {
     const formData = req.body; 
