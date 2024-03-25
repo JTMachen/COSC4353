@@ -98,7 +98,7 @@ app.post('/initial_register', (req, res) => {
 
 // Second registration handler
 app.post('/registration', (req, res) => {
-    const { username, fullName, address1, address2, city, state, zipCode } = req.body;
+    const { username, password, fullName, address1, address2, city, state, zipcode } = req.body;
     fs.readFile('users.json', 'utf8', (err, data) => {
         if (err) {
             console.error('Error reading users.JSON: ', err);
@@ -108,19 +108,13 @@ app.post('/registration', (req, res) => {
 
         try {
             let currentData = JSON.parse(data);
-            console.log(currentData);
-            const userToRegister = currentData.find(user => user.username === username);
-            if (userToRegister) {
-                userToRegister.fullName = fullName;
-                userToRegister.address1 = address1;
-                userToRegister.address2 = address2;
-                userToRegister.city = city;
-                userToRegister.state = state;
-                userToRegister.zipcode = zipCode;
-
-                const updatedData = JSON.stringify(currentData, null, 2);
-
-                fs.writeFile('users.json', updatedData, 'utf8', (writeErr) => {
+            const userToRegister = currentData.findIndex(user => user.username === username);
+            if (userToRegister != -1) {
+                currentData.splice(userToRegister, 1);
+                currentData.push({
+                    username, password, fullName, address1, address2, city, state, zipcode
+                })
+                fs.writeFile('users.json', JSON.stringify(currentData, null, 2), (writeErr) => {
                     if (writeErr) {
                         console.error('Error writing to users.json: ', writeErr);
                         res.status(500).send('Error writing to JSON file');
