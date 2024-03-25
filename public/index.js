@@ -44,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 // redirect to the home page
                 window.location.href = '/pages/home page/home.html';
             } else {
-                //console.error('Login failed:', data.message);
                 errorMessage.textContent = data.message;
             }
         })
