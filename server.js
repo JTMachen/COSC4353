@@ -1,9 +1,24 @@
 const express = require('express');
+const session = require('express-session');
 const fs = require('fs');
 const app = express();
 const PORT = 5500;
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
+
+app.use(session({
+  secret: 'key that will sign cookie',
+  resave: false,
+  saveUninitialized: false
+}));
+
+// Authentication middleware
+const requireLogin = (req, res, next) => {
+  if (!req.session.user) {
+      return res.status(401).json({ message: 'Unauthorized' });
+  }
+  next();
+};
 
 //Access fuel quote history JSON file
 app.get('/fuelquotehistory', (req, res) => {
