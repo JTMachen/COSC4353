@@ -16,13 +16,10 @@ $(document).ready(function() {
         });
     }
     fetchFuelQuoteForm();
-    
     // Listen for form submission
     $('#fuelQuoteForm').submit(function(event) {
         event.preventDefault();
-
         const userInfo = JSON.parse(sessionStorage.getItem('loggedInUser'));
-
         // Gather form data
         const formData = {
             username: userInfo.username,
@@ -32,8 +29,6 @@ $(document).ready(function() {
             suggestedPricePerGallon: parseFloat($('#suggestedPrice').val()),
             totalAmountDue: parseFloat($('#totalAmountDue').val())
         };
-
-        // AJAX POST request to send form data to the server
         $.ajax({
             url: '/updatefuelquotehistory', // Make sure this endpoint is set up on your server
             type: 'POST',
