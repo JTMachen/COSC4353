@@ -1,3 +1,23 @@
+function fetchLogin(username, password) {
+    const formData = {
+        username: username,
+        password: password
+    };
+
+    return fetch('/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .catch(error => {
+        console.error('Error:', error);
+        throw new Error('Login request failed');
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.querySelector('form');
     const errorMessage = document.getElementById('error-message');
@@ -23,19 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
         
-        const formData = {
-            username: username,
-            password: password
-        };
-
-        fetch('/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(response => response.json())
+        fetchLogin(username, password)
         .then(data => {
             if (data.success) {
                 // store user information in session storage
@@ -49,6 +57,11 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => {
             console.error('Error:', error);
+            errorMessage.textContent = 'Login request failed';
         });
     });
 });
+
+module.exports = {
+    fetchLogin
+};
