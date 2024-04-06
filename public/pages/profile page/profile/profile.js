@@ -42,4 +42,4 @@ populateTable()
         console.error('Error: ', error);
     });
 
-populateTable();
+module.exports = populateTable;

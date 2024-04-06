@@ -60,3 +60,5 @@ function prepareData() {
         console.error("Error: ", error);
     });
 }
+
+module.exports = prepareData;

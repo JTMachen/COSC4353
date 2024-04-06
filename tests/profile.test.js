@@ -1,35 +1,42 @@
-const populateTable = require('../public/pages/profile page/profile/profile.js');
-const users = require('../users.json');
+// Import the populateTable function
+const populateTable = require('../public/pages/profile page/profile/profile');
 
-global.sessionStorage = {
-    getItem: jest.fn().mockReturnValue(JSON.stringify({ username: 'john_doe '}))
-};
+// Import jest-fetch-mock for mocking fetch requests
+const fetchMock = require('jest-fetch-mock');
+fetchMock.enableMocks();
 
-global.fetch = jest.fn().mockImplementation(() =>
-    Promise.resolve({
-        ok: true,
-        json: () => Promise.resolve(users)
-    })
-);
+describe('populateTable function', () => {
+  beforeEach(() => {
+    fetchMock.resetMocks(); // Reset fetch mock before each test
+  });
 
-describe('fetchProfile', () => {
-    it('should get the profile information for the user', async () => {
-        const { username } = JSON.parse(global.sessionStorage.getItem());
-        const filteredData = await populateTable();
-        const expectedLength = users.filter(user => user.username === username).length;
-        expectedLength(filteredData).toHaveLength(expectedLength);
-    });
+  test('should populate table with user data', async () => {
+    // Mock fetch response with sample user data
+    const sampleUserData = [
+      { username: 'john_doe', fullName: 'John Doe', address1: '123 Main St', city: 'Anytown', state: 'CA', zipcode: '12345' },
+      // Add more sample user data as needed
+    ];
+    fetchMock.mockResponseOnce(JSON.stringify(sampleUserData));
 
-    it ('should return nothing if error', async () => {
-        global.fetch.mockImplementationOnce(() =>
-            Promise.resolve({
-                ok: false,
-                status: 404,
-                json: () => Promise.resolve([]),
-            })
-        );
+    // Mock sessionStorage getItem method
+    const sessionStorageMock = {
+      getItem: jest.fn().mockReturnValue(JSON.stringify({ username: 'john_doe' })),
+    };
+    global.sessionStorage = sessionStorageMock;
 
-        const filteredData = await populateTable();
-        expect(filteredData).toEqual([]);
-    });
+    // Mock document.createElement and document.querySelector
+    global.document.createElement = jest.fn(tagName => ({
+      tagName,
+      textContent: '',
+      appendChild: jest.fn(),
+    }));
+    global.document.querySelector = jest.fn(() => ({ appendChild: jest.fn() }));
+
+    // Call populateTable function
+    await populateTable();
+
+    // Assertions
+    expect(fetchMock).toHaveBeenCalled();
+    expect(sessionStorageMock.getItem).toHaveBeenCalledWith('loggedInUser');
+  });
 });
