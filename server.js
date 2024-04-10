@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const bcrypt = require('bcrypt');
 const fs = require('fs');
 const app = express();
 const PORT = 5500;
@@ -50,65 +51,79 @@ app.get('/users', (req, res) => {
 
 // route to handle login requests
 app.post('/login', (req, res) => {
-    const { username, password } = req.body;
-    fs.readFile('users.json', 'utf8', (err, data) => {
-        if (err) {
-            res.status(500).json({ success: false, message: 'Error reading user data' });
-            return;
-        }
-        let userData = JSON.parse(data);
-        const user = userData.find(user => user.username === username && user.password === password);
-        if (!user) {
-            res.status(401).json({ success: false, message: 'Invalid username or password' });
-            return;
-        }
-        // login successful, send back user data including username and address
-        const { fullName, address1, address2, city, state, zipcode } = user;
-        res.json({ 
-            success: true, 
-            message: 'Login successful', 
-            user: { 
-                username, 
-                fullName, 
-                address1, 
-                address2, 
-                city, 
-                state, 
-                zipcode 
-            }, 
-            redirectTo: '/public/pages/home.html' 
-        });
-    });
+  const { username, password } = req.body;
+  fs.readFile('users.json', 'utf8', (err, data) => {
+      if (err) {
+          res.status(500).json({ success: false, message: 'Error reading user data' });
+          return;
+      }
+      let userData = JSON.parse(data);
+      const user = userData.find(user => user.username === username);
+      if (!user) {
+          res.status(401).json({ success: false, message: 'Invalid username or password' });
+          return;
+      }
+      // Compare hashed password
+      bcrypt.compare(password, user.password, (err, result) => {
+          if (err || !result) {
+              res.status(401).json({ success: false, message: 'Invalid username or password' });
+              return;
+          }
+          // Passwords match, login successful
+          const { username, fullName, address1, address2, city, state, zipcode } = user;
+          res.json({ 
+              success: true, 
+              message: 'Login successful', 
+              user: { 
+                  username, 
+                  fullName, 
+                  address1, 
+                  address2, 
+                  city, 
+                  state, 
+                  zipcode 
+              }, 
+              redirectTo: '/public/pages/home.html' 
+          });
+      });
+  });
 });
-
 
 // route to handle initial register requests
 app.post('/initial_register', (req, res) => {
     const { username, password } = req.body;
-    // read existing user data form users.json
+    //hash password
+    bcrypt.hash(password, 10, (err, hashedPassword) => {
+      if (err) {
+        console.error('Error hashing password:', err);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+        return;
+      }
+      // read existing user data form users.json
     fs.readFile('users.json', 'utf8', (err, data) => {
-        if (err) {
-            res.status(500).json({ success: false, message: 'Error reading user data' });
-            return;
-        }
-        let userData = JSON.parse(data);
-        // check if the username already exists
-        if(userData.find(user => user.username === username)){
-            res.status(400).json({ success: false, message: 'Username already exists'});
-            return;
-        }
-        // add the new user to userData
-        userData.push({ username, password});
-        // write the updated user data back to users.json
-        fs.writeFile('users.json', JSON.stringify(userData, null, 2), err => {
-            if (err) {
-                res.status(500).json({ success: false, message: 'Error writing user data'});
-                return;
-            }
-            // successful, redirect to the profile registration page
-            res.json({ success: true, message: 'User registered successfully', redirectTo: '/pubilc/pages/profile page/registration/registration.html' });
-        });
+      if (err) {
+          res.status(500).json({ success: false, message: 'Error reading user data' });
+          return;
+      }
+      let userData = JSON.parse(data);
+      // check if the username already exists
+      if(userData.find(user => user.username === username)){
+          res.status(400).json({ success: false, message: 'Username already exists'});
+          return;
+      }
+      // add the new user to userData
+      userData.push({ username, password: hashedPassword});
+      // write the updated user data back to users.json
+      fs.writeFile('users.json', JSON.stringify(userData, null, 2), err => {
+          if (err) {
+              res.status(500).json({ success: false, message: 'Error writing user data'});
+              return;
+          }
+          // successful, redirect to the profile registration page
+          res.json({ success: true, message: 'User registered successfully', redirectTo: '/pubilc/pages/profile page/registration/registration.html' });
+      });
     });
+  });
 });
 
 // Second registration handler
