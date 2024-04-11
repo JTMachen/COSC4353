@@ -22,21 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.querySelector('form');
     const errorMessage = document.getElementById('error-message');
 
-    let eye = document.getElementById('eye');
-    let pass = document.getElementById('password');
-
-    eye.onclick = function(){
-        if(pass.type == 'password'){
-            pass.type = 'text';
-            eye.classList.remove('fa-regular', 'fa-eye-slash');
-            eye.classList.add('fa-regular', 'fa-eye');
-        }else{
-            pass.type = 'password';
-            eye.classList.remove('fa-regular', 'fa-eye');
-            eye.classList.add('fa-regular', 'fa-eye-slash');
-        }
-    }
-
     loginForm.addEventListener('submit', function(event) {
         event.preventDefault();
 
