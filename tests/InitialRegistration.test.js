@@ -19,8 +19,9 @@ describe('fetchInitialRegistration', () => {
     });
 
     it('should throw an error if registration request fails', async () => {
-        global.fetch.mockImplementationOnce(() => Promise.reject(new Error('Failed to fetch')));
-
+        global.fetch.mockImplementationOnce(() => Promise.resolve({
+            ok: false,
+        }));
         await expect(fetchInitialRegistration('testuser', 'testpassword')).rejects.toThrow('Registration request failed');
     });
 });
