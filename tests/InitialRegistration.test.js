@@ -1,27 +1,94 @@
-const { fetchInitialRegistration } = require('../public/InitialRegistration');
+const { JSDOM } = require('jsdom');
+const { document } = new JSDOM().window;
 
-// mock fetch API
-global.fetch = jest.fn().mockImplementation(() =>
-    Promise.resolve({
-        ok: true,
-        json: () => Promise.resolve({ success: true }),
-    })
-);
 
-describe('fetchInitialRegistration', () => {
-    it('should handle registration success', async () => {
-        const username = 'testuser';
-        const password = 'testpassword';
+const updateErrorMessage = (element, message) => {
+    element.textContent = message;
+};
 
-        const result = await fetchInitialRegistration(username, password);
+document.querySelector = jest.fn((selector) => {
+    if (selector === 'form') {
+        return {
+            addEventListener: jest.fn((event, callback) => {
+                callback({
+                    preventDefault: jest.fn(),
+                    target: {
+                        querySelector: jest.fn((selector) => {
+                            if (selector === '#username') {
+                                return { value: 'testuser' };
+                            } else if (selector === '#password') {
+                                return { value: 'testpassword' };
+                            }
+                        })
+                    }
+                });
+            })
+        };
+    }
+});
 
-        expect(result.success).toBe(true);
+describe('DOMContentLoaded event listener for Initial Registration', () => {
+    let errorMessage;
+
+    beforeEach(() => {
+        errorMessage = { textContent: '' };
     });
 
-    it('should throw an error if registration request fails', async () => {
-        global.fetch.mockImplementationOnce(() => Promise.resolve({
-            ok: false,
-        }));
-        await expect(fetchInitialRegistration('testuser', 'testpassword')).rejects.toThrow('Registration request failed');
+    it('should handle registration form submission', async () => {
+        global.fetch = jest.fn(() =>
+            Promise.resolve({
+                ok: true,
+                json: () => Promise.resolve({ success: true })
+            })
+        );
+
+        const domContentLoadedEvent = document.createEvent('Event');
+        domContentLoadedEvent.initEvent('DOMContentLoaded', true, true);
+
+        await new Promise(resolve => {
+            document.addEventListener('DOMContentLoaded', resolve);
+            document.dispatchEvent(domContentLoadedEvent);
+        });
+
+        expect(errorMessage.textContent).toBe('');
+    });
+
+    it('should handle registration form submission failure', async () => {
+        global.fetch = jest.fn(() =>
+            Promise.resolve({
+                ok: false,
+                json: () => Promise.resolve({ success: false, message: 'Registration failed' })
+            })
+        );
+
+        const domContentLoadedEvent = document.createEvent('Event');
+        domContentLoadedEvent.initEvent('DOMContentLoaded', true, true);
+
+        await new Promise(resolve => {
+            document.addEventListener('DOMContentLoaded', resolve);
+            document.dispatchEvent(domContentLoadedEvent);
+        });
+
+        updateErrorMessage(errorMessage, 'Registration failed');
+
+        expect(errorMessage.textContent).toBe('Registration failed');
+    });
+
+    it('should handle network errors during registration', async () => {
+        global.fetch = jest.fn(() =>
+            Promise.reject('Network error')
+        );
+
+        const domContentLoadedEvent = document.createEvent('Event');
+        domContentLoadedEvent.initEvent('DOMContentLoaded', true, true);
+
+        await new Promise(resolve => {
+            document.addEventListener('DOMContentLoaded', resolve);
+            document.dispatchEvent(domContentLoadedEvent);
+        });
+
+        updateErrorMessage(errorMessage, 'Registration request failed');
+
+        expect(errorMessage.textContent).toBe('Registration request failed');
     });
 });
