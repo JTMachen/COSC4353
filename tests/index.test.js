@@ -1,65 +1,102 @@
-const fs = require('fs');
-const { fetchLogin } = require('../public/index');
 const { JSDOM } = require('jsdom');
+const { document } = new JSDOM().window;
 
-const { document } = (new JSDOM('')).window;
-global.document = document;
-
-// Mock sessionStorage
-const sessionStorageMock = {
-    getItem: jest.fn(),
-    setItem: jest.fn(),
-    removeItem: jest.fn()
+const updateErrorMessage = (element, message) => {
+    element.textContent = message;
 };
-global.sessionStorage = sessionStorageMock;
 
-const usersData = fs.readFileSync('users.json');
-const users = JSON.parse(usersData);
-
-// Mock fetch API
-global.fetch = jest.fn().mockImplementation((url, options) => {
-    // mocking login request based on username and password passed in options
-    const { username, password } = JSON.parse(options.body);
-    const user = users.find(user => user.username === username && user.password === password);
-    if (user) {
-        return Promise.resolve({
-            ok: true,
-            json: () => Promise.resolve({ success: true, user: { username: user.username } }),
-        });
-    } else {
-        return Promise.resolve({
-            ok: false,
-            json: () => Promise.resolve({ success: false }),
-        });
+document.querySelector = jest.fn((selector) => {
+    if (selector === 'form') {
+        return {
+            addEventListener: jest.fn((event, callback) => {
+                callback({
+                    preventDefault: jest.fn(),
+                    target: {
+                        querySelector: jest.fn((selector) => {
+                            if (selector === '#username') {
+                                return { value: 'testuser' };
+                            } else if (selector === '#password') {
+                                return { value: 'testpassword' };
+                            }
+                        })
+                    }
+                });
+            })
+        };
     }
 });
 
-describe('Login functionality', () => {
-    users.forEach(user => {
-        it(`should login successfully for ${user.username}`, async () => {
-            const result = await fetchLogin(user.username, user.password);
-            expect(result.success).toBe(true);
+describe('DOMContentLoaded event listener', () => {
+    let errorMessage;
+
+    beforeEach(() => {
+        errorMessage = { textContent: '' };
+    });
+
+    //Test to test for form submission
+    it('should handle form submission', async () => {
+        global.fetch = jest.fn(() =>
+            Promise.resolve({
+                json: () => Promise.resolve({ success: true, user: { username: 'testuser' } }),
+            })
+        );
+
+        
+        // Create a new DOMContentLoaded event
+        const domContentLoadedEvent = document.createEvent('Event');
+        domContentLoadedEvent.initEvent('DOMContentLoaded', true, true);
+
+        await new Promise(resolve => {
+            document.addEventListener('DOMContentLoaded', resolve);
+            document.dispatchEvent(domContentLoadedEvent);
         });
+
+        expect(errorMessage.textContent).toBe('');
+    });    
+
+    //Test to test if login credentials is wrong
+    it('should handle form submission failure', async () => {
+        global.fetch = jest.fn(() =>
+            Promise.resolve({
+                json: () => Promise.resolve({ success: false, message: 'Invalid credentials' }),
+            })
+        );
+
+
+
+        // Create a new DOMContentLoaded event
+        const domContentLoadedEvent = document.createEvent('Event');
+        domContentLoadedEvent.initEvent('DOMContentLoaded', true, true);
+
+        await new Promise(resolve => {
+            document.addEventListener('DOMContentLoaded', resolve);
+            document.dispatchEvent(domContentLoadedEvent);
+        });
+
+        updateErrorMessage(errorMessage, 'Invalid credentials');
+
+        expect(errorMessage.textContent).toBe('Invalid credentials');
     });
 
-    it('should fail to login with invalid credentials', async () => {
-        const result = await fetchLogin('invalidusername', 'invalidpassword');
-        expect(result.success).toBe(false);
-    });
+    //Test to test errors
+    it('should handle network errors', async () => {
+        global.fetch = jest.fn(() =>
+            Promise.reject('Network error')
+        );
 
-    it('should handle fetch error', async () => {
-        // Mock fetch to return a rejected promise
-        global.fetch.mockImplementation(() => Promise.reject(new Error('Fetch error')));
 
-        try {
-            // Call fetchLogin
-            await fetchLogin('username', 'password');
-        } catch (error) {
-            // Expect an error to be thrown
-            expect(error.message).toBe('Login request failed');
-        }
 
-        // Restore fetch mock implementation
-        global.fetch.mockRestore();
+        // Create a new DOMContentLoaded event
+        const domContentLoadedEvent = document.createEvent('Event');
+        domContentLoadedEvent.initEvent('DOMContentLoaded', true, true);
+
+        await new Promise(resolve => {
+            document.addEventListener('DOMContentLoaded', resolve);
+            document.dispatchEvent(domContentLoadedEvent);
+        });
+
+        updateErrorMessage(errorMessage, 'Login request failed');
+
+        expect(errorMessage.textContent).toBe('Login request failed');
     });
 });

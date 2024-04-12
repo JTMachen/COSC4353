@@ -1,4 +1,4 @@
-function fetchLogin(username, password) {
+function fetchLogin(username, password, storage) {
     const formData = {
         username: username,
         password: password
@@ -12,11 +12,21 @@ function fetchLogin(username, password) {
         body: JSON.stringify(formData)
     })
     .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            storage.loggedInUser = data.user;
+            return data; 
+        } else {
+            throw new Error('Invalid credentials'); 
+        }
+    })
     .catch(error => {
         console.error('Error:', error);
         throw new Error('Login request failed');
     });
 }
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.querySelector('form');
@@ -46,6 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
 
 module.exports = {
     fetchLogin
