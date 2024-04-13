@@ -10,6 +10,16 @@
     "history": []
   },
   {
+    "username": "username",
+    "fullName": "tempName",
+    "address1": "t",
+    "address2": "",
+    "city": "t",
+    "state": "HI",
+    "zipcode": "65498",
+    "history": []
+  },
+  {
     "username": "john_doe",
     "fullName": "John Doe",
     "address1": "123 Example St",
@@ -19,35 +29,30 @@
     "zipcode": "12345",
     "history": [
       {
-        "gallonsRequested": 100,
-        "deliveryDate": "03-05-2024",
-        "totalAmountDue": 250
+        "gallonsRequested": "100",
+        "deliveryDate": "2024-03-15",
+        "totalAmountDue": "250"
       },
       {
-        "gallonsRequested": 150,
-        "deliveryDate": "02-20-2024",
-        "totalAmountDue": 367.5
+        "gallonsRequested": "150",
+        "deliveryDate": "2024-02-20",
+        "totalAmountDue": "367.5"
       },
       {
-        "gallonsRequested": 200,
-        "deliveryDate": "02-10-2024",
-        "totalAmountDue": 510
+        "gallonsRequested": "200",
+        "deliveryDate": "2024-02-22",
+        "totalAmountDue": "510"
       },
       {
         "gallonsRequested": "9819778",
         "deliveryDate": "2024-04-22",
         "totalAmountDue": "16644523.71"
+      },
+      {
+        "gallonsRequested": "1500",
+        "deliveryDate": "2024-04-30",
+        "totalAmountDue": "2542.5"
       }
     ]
-  },
-  {
-    "username": "username",
-    "fullName": "tempName",
-    "address1": "t",
-    "address2": "",
-    "city": "t",
-    "state": "HI",
-    "zipcode": "65498",
-    "history": []
   }
 ]

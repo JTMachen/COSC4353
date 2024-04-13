@@ -28,7 +28,7 @@ describe('populateTable function', () => {
     global.document.createElement = jest.fn(tagName => ({
       tagName,
       textContent: '',
-      appendChild: jest.fn(),
+      appendChild: jest.fn()
     }));
     global.document.querySelector = jest.fn(() => ({ appendChild: jest.fn() }));
 

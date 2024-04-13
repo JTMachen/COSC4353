@@ -8,8 +8,21 @@
 </head>
 <body>
     <h2>Fuel Quote Form</h2>
-    <form id="fuelQuoteForm">
-        
+    <form>
+        <label>Gallons Requested:</label><br>
+        <input type="number" id="gallonsRequested" name="gallonsRequested" required><br><br>
+        <label>Address 1:</label><br>
+        <input type="text" id="address1" readonly><br><br>
+        <label>Address 2:</label><br>
+        <input type="text" id="address2" readonly><br><br>
+        <label>Delivery Date:</label><br>
+        <input type="date" id="deliveryDate" required><br><br>
+        <label>Suggested Price Per Gallon ($):</label><br>
+        <input type="number" id="suggestedPrice" readonly placeholder="Price per gallon"><br><br>
+        <label>Total Amount Due ($):</label><br>
+        <input type="number" id="totalAmountDue" readonly placeholder="Total amount"><br><br>
+        <input type="button" id="getQuote" value="Get Quote">
+        <input type="submit" id="submit" value="Submit">
     </form>
     <script src="createForm.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
