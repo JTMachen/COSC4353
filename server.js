@@ -166,21 +166,26 @@ app.post('/registration', (req, res) => {
 
 
 app.post('/fuelquoteform', (req, res) => {
-    const formData = req.body; 
+    const formData = req.body;
 
-    function handleFuelQuoteFormSubmission(formData) {
+    fs.readFile('fuelquotehistory.json', 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading fuel quote history file:', err);
+            res.status(500).json({ success: false, message: 'Error reading fuel quote history' });
+            return;
+        }
+        let quotes = JSON.parse(data);
+        quotes.push(formData);
 
-        console.log('Received fuel quote form submission:', formData);
-        return { success: true, message: 'Fuel quote submitted successfully' };
-    }
-
-    try {
-        const result = handleFuelQuoteFormSubmission(formData);
-        res.status(200).json(result);
-    } catch (error) {
-        console.error('Error handling fuel quote form submission:', error);
-        res.status(500).json({ success: false, message: 'Internal server error' });
-    }
+        fs.writeFile('fuelquotehistory.json', JSON.stringify(quotes, null, 2), (writeErr) => {
+            if (writeErr) {
+                console.error('Error writing to fuel quote history file:', writeErr);
+                res.status(500).json({ success: false, message: 'Error updating fuel quote history' });
+                return;
+            }
+            res.status(200).json({ success: true, message: 'Fuel quote submitted successfully' });
+        });
+    });
 });
 
 // Logout route

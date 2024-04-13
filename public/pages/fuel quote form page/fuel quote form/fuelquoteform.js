@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Function to fetch existing fuel quotes and display them
     function fetchFuelQuoteForm() {
-        fetch('/fuelquoteform', { method: 'GET' })
+        fetch('/fuelquotehistory', { method: 'GET' })
             .then(response => response.json())
             .then(data => {
                 data.forEach(function (quote) {
@@ -14,11 +15,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     fetchFuelQuoteForm();
 
-
+    // Event listener for submitting the fuel quote form
     document.getElementById('fuelQuoteForm').addEventListener('submit', function (event) {
         event.preventDefault();
         const userInfo = JSON.parse(sessionStorage.getItem('loggedInUser'));
-        
 
         const formData = {
             username: userInfo.username,
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
             totalAmountDue: parseFloat(document.getElementById('totalAmountDue').value)
         };
 
-        fetch('/updatefuelquotehistory', {
+        fetch('/fuelquoteform', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -44,7 +44,9 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(responseJson => {
             console.log('Fuel quote form submitted successfully', responseJson);
-
+            // Optionally, update the UI with the new quote without reloading the page
+            const newQuoteRow = `<tr><td>${formData.deliveryDate}</td><td>${formData.gallonsRequested}</td><td>${formData.suggestedPricePerGallon}</td><td>${formData.totalAmountDue}</td></tr>`;
+            document.getElementById('fuelQuoteTableBody').insertAdjacentHTML('beforeend', newQuoteRow);
         })
         .catch(error => {
             console.error('Error submitting fuel quote form:', error);
