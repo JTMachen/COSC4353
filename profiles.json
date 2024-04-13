@@ -11,17 +11,17 @@
       {
         "gallonsRequested": 100,
         "deliveryDate": "03-05-2024",
-        "totalAmountDue": 250.00
+        "totalAmountDue": 250
       },
       {
         "gallonsRequested": 150,
         "deliveryDate": "02-20-2024",
-        "totalAmountDue": 367.50
+        "totalAmountDue": 367.5
       },
       {
-          "gallonsRequested": 200,
-          "deliveryDate": "02-10-2024",
-          "totalAmountDue": 510.00
+        "gallonsRequested": 200,
+        "deliveryDate": "02-10-2024",
+        "totalAmountDue": 510
       }
     ]
   },
@@ -33,6 +33,16 @@
     "city": "Houston",
     "state": "TX",
     "zipcode": "77034",
+    "history": []
+  },
+  {
+    "username": "username",
+    "fullName": "tempName",
+    "address1": "t",
+    "address2": "",
+    "city": "t",
+    "state": "HI",
+    "zipcode": "65498",
     "history": []
   },
   {

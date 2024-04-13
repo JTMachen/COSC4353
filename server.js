@@ -164,25 +164,38 @@ app.post('/registration', (req, res) => {
 
 
 app.post('/fuelquoteform', (req, res) => {
-    const formData = req.body;
-
-    fs.readFile('fuelquotehistory.json', 'utf8', (err, data) => {
+    const { username, fullName, address1, address2, city, state, zipcode, history } = req.body;
+    fs.readFile('profiles.json', 'utf8', (err, data) => {
         if (err) {
-            console.error('Error reading fuel quote history file:', err);
-            res.status(500).json({ success: false, message: 'Error reading fuel quote history' });
+            console.error('Error reading users.JSON: ', err);
+            res.status(500).send('Error reading JSON file');
             return;
         }
-        let quotes = JSON.parse(data);
-        quotes.push(formData);
-
-        fs.writeFile('fuelquotehistory.json', JSON.stringify(quotes, null, 2), (writeErr) => {
-            if (writeErr) {
-                console.error('Error writing to fuel quote history file:', writeErr);
-                res.status(500).json({ success: false, message: 'Error updating fuel quote history' });
-                return;
+        try {
+            let currentData = JSON.parse(data);
+            const userToRegister = currentData.findIndex(user => user.username === username);
+            if (userToRegister != -1) {
+                currentData.splice(userToRegister, 1);
+                currentData.push({
+                    username, fullName, address1, address2, city, state, zipcode, history
+                })
+                fs.writeFile('profiles.json', JSON.stringify(currentData, null, 2), (writeErr) => {
+                    if (writeErr) {
+                        console.error('Error writing to users.json: ', writeErr);
+                        res.status(500).send('Error writing to JSON file');
+                        return;
+                    }
+                    console.log('User data updated successfully');
+                    res.json({ success: true, message: 'User data updated successfully' });
+                });
+            } else {
+                console.error("Username not found");
+                res.status(404).json({ success: false, message: 'Username not found'});
             }
-            res.status(200).json({ success: true, message: 'Fuel quote submitted successfully' });
-        });
+        } catch (parseError) {
+            console.error('Error parsing JSON:', parseError);
+            res.status(500).send('Error parsing JSON');
+        }
     });
 });
 

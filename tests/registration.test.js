@@ -30,7 +30,7 @@ describe('prepareData function', () => {
 
     // Mock sessionStorage getItem method
     global.sessionStorage = {
-      getItem: jest.fn().mockReturnValue(JSON.stringify({ username: 'testuser', password: 'testpassword' })),
+      getItem: jest.fn().mockReturnValue(JSON.stringify({ username: 'testuser' })),
     };
 
     // Call prepareData function
@@ -45,13 +45,13 @@ describe('prepareData function', () => {
       },
       body: JSON.stringify({
         username: 'testuser',
-        password: 'testpassword',
         fullName: 'John Doe',
         address1: '123 Main St',
         address2: 'Apt 1',
         city: 'Anytown',
         state: 'CA',
         zipcode: '12345',
+        history: [],
       }),
     });
   });

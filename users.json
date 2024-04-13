@@ -1,9 +1,5 @@
 [
   {
-    "username": "username",
-    "password": "$2b$10$G1pb5oXU9RRCbbhk7sldmur9.06nAM5KZLeBbvUw4ZtYob/8jQxqO"
-  },
-  {
     "username": "john_doe",
     "password": "$2b$10$2KCMjxDc7oQkX.Dz8BrZ3uNKEhbT/BSgGdBsoNAvnkzW9/VGFUx5y"
   },
@@ -12,7 +8,7 @@
     "password": "$2b$10$nd1bmDS3dJ48qSzGmYPBW.kvUs5IcAx8ZLqy96hXF.kswQ6Lh6cyG"
   },
   {
-    "username": "blah",
-    "password": "$2b$10$o.dAt2UI.urk7Nuyu4J44uvVa5407etbEuXnYE3HJc55TnyV6RELa"
+    "username": "username",
+    "password": "$2b$10$FjX.qhbrnHt1SAnbuZMaWeB9j8yP1dvuqqYXxXV9zKWJJR1IqJcvu"
   }
 ]
