@@ -131,30 +131,34 @@ app.post('/registration', (req, res) => {
     const { username, fullName, address1, address2, city, state, zipcode, history } = req.body;
     fs.readFile('profiles.json', 'utf8', (err, data) => {
         if (err) {
-            console.error('Error reading users.JSON: ', err);
+            console.error('Error reading profiles.json:', err);
             res.status(500).send('Error reading JSON file');
             return;
         }
 
         try {
             let currentData = JSON.parse(data);
-            if (currentData) {
-                currentData.push({
-                    username, fullName, address1, address2, city, state, zipcode, history
-                })
-                fs.writeFile('profiles.json', JSON.stringify(currentData, null, 2), (writeErr) => {
-                    if (writeErr) {
-                        console.error('Error writing to users.json: ', writeErr);
-                        res.status(500).send('Error writing to JSON file');
-                        return;
-                    }
-                    console.log('User data updated successfully');
-                    res.json({ success: true, message: 'User data updated successfully' });
-                });
-            } else {
-                console.error("Username not found");
-                res.status(404).json({ success: false, message: 'Username not found'});
+            // Check if the username already exists
+            const existingUser = currentData.find(user => user.username === username);
+            if (existingUser) {
+                console.error('Username already exists');
+                return res.status(400).json({ success: false, message: 'Username already exists' });
             }
+
+            // Add the new user to userData
+            currentData.push({
+                username, fullName, address1, address2, city, state, zipcode, history
+            });
+
+            // Write the updated user data back to profiles.json
+            fs.writeFile('profiles.json', JSON.stringify(currentData, null, 2), (writeErr) => {
+                if (writeErr) {
+                    console.error('Error writing to profiles.json:', writeErr);
+                    return res.status(500).send('Error writing to JSON file');
+                }
+                console.log('User data updated successfully');
+                return res.json({ success: true, message: 'User data updated successfully' });
+            });
         } catch (parseError) {
             console.error('Error parsing JSON:', parseError);
             res.status(500).send('Error parsing JSON');
@@ -163,7 +167,7 @@ app.post('/registration', (req, res) => {
 });
 
 
-app.post('/fuelquoteform', (req, res) => {
+app.post('/updateHistory', (req, res) => {
     const { username, fullName, address1, address2, city, state, zipcode, history } = req.body;
     fs.readFile('profiles.json', 'utf8', (err, data) => {
         if (err) {
@@ -181,7 +185,7 @@ app.post('/fuelquoteform', (req, res) => {
                 })
                 fs.writeFile('profiles.json', JSON.stringify(currentData, null, 2), (writeErr) => {
                     if (writeErr) {
-                        console.error('Error writing to users.json: ', writeErr);
+                        console.error('Error writing to profiles.json: ', writeErr);
                         res.status(500).send('Error writing to JSON file');
                         return;
                     }

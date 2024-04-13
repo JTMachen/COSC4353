@@ -48,9 +48,9 @@ function submitForm(userData) {
             totalAmountDue: document.getElementById("totalAmountDue").value
         }
     )
-    console.log(userData.username);
+    sessionStorage.setItem('userData', JSON.stringify(userData));
     // Submits the form to the server
-    fetch('/fuelquoteform', {
+    fetch('/updateHistory', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
