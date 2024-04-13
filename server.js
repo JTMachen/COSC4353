@@ -36,7 +36,7 @@ app.get('/fuelquotehistory', (req, res) => {
 });
 
 // Access users JSON file
-app.get('/users', (req, res) => {
+app.get('/profiles', (req, res) => {
     console.log('Recieved request');
     fs.readFile('users.json', 'utf8', (err, data) => {
         if (err) {
@@ -128,8 +128,8 @@ app.post('/initial_register', (req, res) => {
 
 // Second registration handler
 app.post('/registration', (req, res) => {
-    const { username, password, fullName, address1, address2, city, state, zipcode } = req.body;
-    fs.readFile('users.json', 'utf8', (err, data) => {
+    const { username, fullName, address1, address2, city, state, zipcode } = req.body;
+    fs.readFile('profiles.json', 'utf8', (err, data) => {
         if (err) {
             console.error('Error reading users.JSON: ', err);
             res.status(500).send('Error reading JSON file');
@@ -138,13 +138,11 @@ app.post('/registration', (req, res) => {
 
         try {
             let currentData = JSON.parse(data);
-            const userToRegister = currentData.findIndex(user => user.username === username);
-            if (userToRegister != -1) {
-                currentData.splice(userToRegister, 1);
+            if (currentData) {
                 currentData.push({
-                    username, password, fullName, address1, address2, city, state, zipcode
+                    username, fullName, address1, address2, city, state, zipcode
                 })
-                fs.writeFile('users.json', JSON.stringify(currentData, null, 2), (writeErr) => {
+                fs.writeFile('profiles.json', JSON.stringify(currentData, null, 2), (writeErr) => {
                     if (writeErr) {
                         console.error('Error writing to users.json: ', writeErr);
                         res.status(500).send('Error writing to JSON file');

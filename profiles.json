@@ -1,0 +1,29 @@
+[
+  {
+    "username": "john_doe",
+    "fullName": "John Doe",
+    "address1": "123 Example Address blah blah St",
+    "address2": "Apt 101",
+    "city": "Katy",
+    "state": "TX",
+    "zipcode": "12345"
+  },
+  {
+    "username": "jane_smith",
+    "fullName": "Jane Smith",
+    "address1": "248 Example address blah blah St",
+    "address2": "",
+    "city": "Houston",
+    "state": "TX",
+    "zipcode": "77034"
+  },
+  {
+    "username": "username",
+    "fullName": "tempName",
+    "address1": "t",
+    "address2": "",
+    "city": "t",
+    "state": "HI",
+    "zipcode": "65498"
+  }
+]

@@ -1,38 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1712893107862" clover="3.2.0">
-  <project timestamp="1712893107863" name="All files">
-    <metrics statements="88" coveredstatements="65" conditionals="15" coveredconditionals="10" methods="27" coveredmethods="22" elements="130" coveredelements="97" complexity="0" loc="88" ncloc="88" packages="4" files="4" classes="4"/>
-    <package name="public">
-      <metrics statements="22" coveredstatements="9" conditionals="4" coveredconditionals="2" methods="7" coveredmethods="3"/>
-      <file name="InitialRegistration.js" path="C:\Users\Thu\Desktop\COSC4353\public\InitialRegistration.js">
-        <metrics statements="22" coveredstatements="9" conditionals="4" coveredconditionals="2" methods="7" coveredmethods="3"/>
-        <line num="2" count="2" type="stmt"/>
+<coverage generated="1712978147468" clover="3.2.0">
+  <project timestamp="1712978147469" name="All files">
+    <metrics statements="78" coveredstatements="66" conditionals="13" coveredconditionals="9" methods="26" coveredmethods="24" elements="117" coveredelements="99" complexity="0" loc="78" ncloc="78" packages="4" files="4" classes="4"/>
+    <package name="fuel quote form page.fuel quote form">
+      <metrics statements="12" coveredstatements="10" conditionals="2" coveredconditionals="1" methods="6" coveredmethods="5"/>
+      <file name="fuelquoteform.js" path="C:\Users\taylo\OneDrive\Documents\School\2024\Software\COSC4353\public\pages\fuel quote form page\fuel quote form\fuelquoteform.js">
+        <metrics statements="12" coveredstatements="10" conditionals="2" coveredconditionals="1" methods="6" coveredmethods="5"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
         <line num="7" count="2" type="stmt"/>
-        <line num="15" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="18" count="1" type="stmt"/>
-        <line num="21" count="1" type="stmt"/>
-        <line num="22" count="1" type="stmt"/>
-        <line num="26" count="1" type="stmt"/>
-        <line num="27" count="0" type="stmt"/>
-        <line num="28" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="27" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="28" count="2" type="stmt"/>
         <line num="30" count="0" type="stmt"/>
-        <line num="31" count="0" type="stmt"/>
-        <line num="33" count="0" type="stmt"/>
-        <line num="34" count="0" type="stmt"/>
+        <line num="33" count="2" type="stmt"/>
         <line num="36" count="0" type="stmt"/>
-        <line num="38" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="40" count="0" type="stmt"/>
-        <line num="41" count="0" type="stmt"/>
-        <line num="43" count="0" type="stmt"/>
-        <line num="47" count="0" type="stmt"/>
-        <line num="48" count="0" type="stmt"/>
-        <line num="53" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
       </file>
     </package>
-    <package name="public.pages.fuel quote form page.fuel quote history">
+    <package name="fuel quote form page.fuel quote history">
       <metrics statements="21" coveredstatements="17" conditionals="2" coveredconditionals="2" methods="9" coveredmethods="8"/>
-      <file name="fuelquotehistory.js" path="C:\Users\Thu\Desktop\COSC4353\public\pages\fuel quote form page\fuel quote history\fuelquotehistory.js">
+      <file name="fuelquotehistory.js" path="C:\Users\taylo\OneDrive\Documents\School\2024\Software\COSC4353\public\pages\fuel quote form page\fuel quote history\fuelquotehistory.js">
         <metrics statements="21" coveredstatements="17" conditionals="2" coveredconditionals="2" methods="9" coveredmethods="8"/>
         <line num="3" count="3" type="stmt"/>
         <line num="5" count="2" type="cond" truecount="2" falsecount="0"/>
@@ -57,9 +47,9 @@
         <line num="56" count="1" type="stmt"/>
       </file>
     </package>
-    <package name="public.pages.profile page.profile">
+    <package name="profile page.profile">
       <metrics statements="26" coveredstatements="23" conditionals="2" coveredconditionals="1" methods="7" coveredmethods="7"/>
-      <file name="profile.js" path="C:\Users\Thu\Desktop\COSC4353\public\pages\profile page\profile\profile.js">
+      <file name="profile.js" path="C:\Users\taylo\OneDrive\Documents\School\2024\Software\COSC4353\public\pages\profile page\profile\profile.js">
         <metrics statements="26" coveredstatements="23" conditionals="2" coveredconditionals="1" methods="7" coveredmethods="7"/>
         <line num="4" count="2" type="stmt"/>
         <line num="6" count="1" type="cond" truecount="1" falsecount="1"/>
@@ -89,9 +79,9 @@
         <line num="45" count="1" type="stmt"/>
       </file>
     </package>
-    <package name="public.pages.profile page.registration">
+    <package name="profile page.registration">
       <metrics statements="19" coveredstatements="16" conditionals="7" coveredconditionals="5" methods="4" coveredmethods="4"/>
-      <file name="registration.js" path="C:\Users\Thu\Desktop\COSC4353\public\pages\profile page\registration\registration.js">
+      <file name="registration.js" path="C:\Users\taylo\OneDrive\Documents\School\2024\Software\COSC4353\public\pages\profile page\registration\registration.js">
         <metrics statements="19" coveredstatements="16" conditionals="7" coveredconditionals="5" methods="4" coveredmethods="4"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>

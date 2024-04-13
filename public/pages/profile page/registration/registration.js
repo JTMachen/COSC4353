@@ -16,7 +16,6 @@ function prepareData() {
     const username = currentUser.username;
     const userData = {
         username: username,
-        password: currentUser.password,
         fullName: fullNameInput,
         address1: address1Input,
         address2: address2Input,

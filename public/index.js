@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
         
-        fetchLogin(username, password)
+        fetchLogin(username, password, sessionStorage)
         .then(data => {
             if (data.success) {
                 // store user information in session storage

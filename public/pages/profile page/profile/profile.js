@@ -1,7 +1,7 @@
 // Function to output the profile onto the page
 function populateTable() {
     // Temp json data to populate table
-    return fetch('/users')
+    return fetch('/profiles')
         .then(response => {
             if (!response.ok) {
                 throw new Error('User data not found');

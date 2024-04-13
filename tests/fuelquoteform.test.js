@@ -1,81 +1,48 @@
-// fuelquoteform.test.js
+const { JSDOM } = require('jsdom');
+const fuelQuoteForm = require('../public/pages/fuel quote form page/fuel quote form/fuelquoteform');
+
 describe('Fuel Quote Form Test', () => {
-    beforeEach(() => {
-        // First, mock sessionStorage
-        global.sessionStorage = {
-            getItem: jest.fn().mockReturnValue(JSON.stringify({ username: 'testUser' })),
-            setItem: jest.fn(),
-            clear: jest.fn(),
-            removeItem: jest.fn()
-        };
-        // Explicitly mock fetch as a Jest mock function
-        global.fetch = jest.fn().mockImplementation(() =>
-            Promise.resolve({
-                ok: true,
-                json: () => Promise.resolve({ message: 'Success' }),
-            })
-        );
-        // Clear mocks
-        fetch.mockClear();
-        sessionStorage.getItem.mockClear();
-        
-        // Mock sessionStorage again
-        global.sessionStorage = {
-            getItem: jest.fn().mockReturnValue(JSON.stringify({ username: 'testUser' })),
-        };
-
-        // Mock fetch again
-        global.fetch = jest.fn().mockImplementation(() =>
-            Promise.resolve({
-                ok: true,
-                json: () => Promise.resolve({ message: 'Success' }),
-            })
-        );
-
+    test('should submit the form to the server', async () => {
         // Set up the DOM
-        document.body.innerHTML = `
-            <form id="fuelQuoteForm">
-                <input id="gallonsRequested">
-                <input id="deliveryAddress">
-                <input id="deliveryDate">
-                <input id="suggestedPrice">
-                <input id="totalAmountDue">
-            </form>
-            <tbody id="fuelQuoteTableBody"></tbody>
-        `;
+        const dom = new JSDOM(`
+            <html>
+                <body>
+                    <form id="fuelQuoteForm">
+                        <input id="gallonsRequested" value="100">
+                        <input id="deliveryAddress" value="123 Main St">
+                        <input id="deliveryDate" value="2024-04-15">
+                        <input id="suggestedPrice" value="2.50">
+                        <input id="totalAmountDue" value="250">
+                    </form>
+                </body>
+            </html>
+        `);
+        global.document = dom.window.document;
 
-        // Dynamically import the script
-        jest.resetModules();
-        require('../public/pages/fuel quote form page/fuel quote form/fuelquoteform.js'); // Update to the actual path
-    });
+        // Mock fetch response
+        global.fetch = jest.fn(() =>
+            Promise.resolve({
+                ok: true,
+                json: () => Promise.resolve({ success: true }),
+            })
+        );
 
-    it('successfully submits data from the fuel quote form', async () => {
-        // Set input values
-        document.getElementById('gallonsRequested').value = '100';
-        document.getElementById('deliveryAddress').value = '123 Main St';
-        document.getElementById('deliveryDate').value = '2024-04-15';
-        document.getElementById('suggestedPrice').value = '2.50';
-        document.getElementById('totalAmountDue').value = '250';
+        // Mock sessionStorage
+        global.sessionStorage = {
+            getItem: jest.fn().mockReturnValue(JSON.stringify({ username: 'testUser' })),
+        };
+
+        // Call fuelquoteform function
+        await fuelQuoteForm();
+
+        // Simulate DOMContentLoaded event
+        dom.window.document.dispatchEvent(new dom.window.Event('DOMContentLoaded'));
 
         // Simulate form submission
-        const form = document.getElementById('fuelQuoteForm');
-    
-        // Correction: directly create a 'submit' event
-        const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
-        
-        // Add listener to prevent default behavior
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-        });
-
-        // Trigger the event
-        form.dispatchEvent(submitEvent);
-
-        // Wait for asynchronous operations to complete
-        await new Promise(process.nextTick);
+        dom.window.document.getElementById('fuelQuoteForm').dispatchEvent(new dom.window.Event('submit'));
 
         // Assert that fetch was called correctly
-        expect(fetch).toHaveBeenCalledWith('/updatefuelquotehistory', {
+        expect(fetch).toHaveBeenCalledWith('/fuelquotehistory', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
