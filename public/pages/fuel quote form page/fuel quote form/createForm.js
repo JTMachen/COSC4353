@@ -52,10 +52,10 @@ populateTable()
             let input = document.createElement("input");
             input.id = variableArray[i];
             if (i == 0) {
-                input.type = Number;
+                input.type = "number";
             }
             else if (i == 1 || i == 2 || i == 4 || i == 5) {
-                input.type = Text;
+                input.type = "text";
                 input.readOnly = true;
                 if (i == 1) {
                     input.value = userData[0].address1;
