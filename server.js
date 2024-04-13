@@ -38,7 +38,7 @@ app.get('/fuelquotehistory', (req, res) => {
 // Access users JSON file
 app.get('/profiles', (req, res) => {
     console.log('Recieved request');
-    fs.readFile('users.json', 'utf8', (err, data) => {
+    fs.readFile('profiles.json', 'utf8', (err, data) => {
         if (err) {
             console.error('Error reading users.JSON: ', err);
             res.status(500).send('Error reading JSON file');
@@ -128,7 +128,7 @@ app.post('/initial_register', (req, res) => {
 
 // Second registration handler
 app.post('/registration', (req, res) => {
-    const { username, fullName, address1, address2, city, state, zipcode } = req.body;
+    const { username, fullName, address1, address2, city, state, zipcode, history } = req.body;
     fs.readFile('profiles.json', 'utf8', (err, data) => {
         if (err) {
             console.error('Error reading users.JSON: ', err);
@@ -140,7 +140,7 @@ app.post('/registration', (req, res) => {
             let currentData = JSON.parse(data);
             if (currentData) {
                 currentData.push({
-                    username, fullName, address1, address2, city, state, zipcode
+                    username, fullName, address1, address2, city, state, zipcode, history
                 })
                 fs.writeFile('profiles.json', JSON.stringify(currentData, null, 2), (writeErr) => {
                     if (writeErr) {

@@ -21,7 +21,8 @@ function prepareData() {
         address2: address2Input,
         city: cityInput,
         state: stateInput,
-        zipcode: zipCodeInput
+        zipcode: zipCodeInput,
+        history: []
     };
     fetch('/registration', {
         method: 'POST',

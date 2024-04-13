@@ -2,11 +2,28 @@
   {
     "username": "john_doe",
     "fullName": "John Doe",
-    "address1": "123 Example Address blah blah St",
+    "address1": "123 Example St",
     "address2": "Apt 101",
     "city": "Katy",
     "state": "TX",
-    "zipcode": "12345"
+    "zipcode": "12345",
+    "history": [
+      {
+        "gallonsRequested": 100,
+        "deliveryDate": "03-05-2024",
+        "totalAmountDue": 250.00
+      },
+      {
+        "gallonsRequested": 150,
+        "deliveryDate": "02-20-2024",
+        "totalAmountDue": 367.50
+      },
+      {
+          "gallonsRequested": 200,
+          "deliveryDate": "02-10-2024",
+          "totalAmountDue": 510.00
+      }
+    ]
   },
   {
     "username": "jane_smith",
@@ -15,7 +32,8 @@
     "address2": "",
     "city": "Houston",
     "state": "TX",
-    "zipcode": "77034"
+    "zipcode": "77034",
+    "history": []
   },
   {
     "username": "username",
@@ -24,6 +42,7 @@
     "address2": "",
     "city": "t",
     "state": "HI",
-    "zipcode": "65498"
+    "zipcode": "65498",
+    "history": []
   }
 ]

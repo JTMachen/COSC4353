@@ -16,7 +16,7 @@ function fuelQuoteForm() {
                 totalAmountDue: parseFloat(document.getElementById('totalAmountDue').value)
             };
 
-            fetch('/fuelquotehistory', {
+            fetch('/fuelquoteform', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
