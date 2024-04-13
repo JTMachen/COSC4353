@@ -1,56 +1,81 @@
-describe('fuelquoteformtest', () => {
+// fuelquoteform.test.js
+describe('Fuel Quote Form Test', () => {
     beforeEach(() => {
+        // First, mock sessionStorage
         global.sessionStorage = {
             getItem: jest.fn().mockReturnValue(JSON.stringify({ username: 'testUser' })),
             setItem: jest.fn(),
             clear: jest.fn(),
             removeItem: jest.fn()
         };
+        // Explicitly mock fetch as a Jest mock function
+        global.fetch = jest.fn().mockImplementation(() =>
+            Promise.resolve({
+                ok: true,
+                json: () => Promise.resolve({ message: 'Success' }),
+            })
+        );
+        // Clear mocks
+        fetch.mockClear();
+        sessionStorage.getItem.mockClear();
+        
+        // Mock sessionStorage again
+        global.sessionStorage = {
+            getItem: jest.fn().mockReturnValue(JSON.stringify({ username: 'testUser' })),
+        };
 
+        // Mock fetch again
+        global.fetch = jest.fn().mockImplementation(() =>
+            Promise.resolve({
+                ok: true,
+                json: () => Promise.resolve({ message: 'Success' }),
+            })
+        );
 
-        global.fetch = jest.fn((url) => {
-            const validUrls = {
-                'http://example.com/fuelquotehistory': {
-                    ok: true,
-                    json: () => Promise.resolve({ message: 'Success' }),
-                },
-                'http://example.com/updatefuelquotehistory': {
-                    ok: true,
-                    json: () => Promise.resolve({ message: 'Success' }),
-                }
-            };
-            return Promise.resolve(validUrls[url] || { ok: false });
-        });
-
+        // Set up the DOM
         document.body.innerHTML = `
             <form id="fuelQuoteForm">
-                <input id="gallonsRequested" type="number">
-                <input id="deliveryAddress" type="text">
-                <input id="deliveryDate" type="date">
-                <input id="suggestedPrice" type="number">
-                <input id="totalAmountDue" type="number">
+                <input id="gallonsRequested">
+                <input id="deliveryAddress">
+                <input id="deliveryDate">
+                <input id="suggestedPrice">
+                <input id="totalAmountDue">
             </form>
             <tbody id="fuelQuoteTableBody"></tbody>
         `;
 
+        // Dynamically import the script
         jest.resetModules();
-        require('../public/pages/fuel quote form page/fuel quote form/fuelquoteform.js');
+        require('../public/pages/fuel quote form page/fuel quote form/fuelquoteform.js'); // Update to the actual path
     });
 
-    it('successful submit fuelquoteform', async () => {
+    it('successfully submits data from the fuel quote form', async () => {
+        // Set input values
         document.getElementById('gallonsRequested').value = '100';
         document.getElementById('deliveryAddress').value = '123 Main St';
         document.getElementById('deliveryDate').value = '2024-04-15';
         document.getElementById('suggestedPrice').value = '2.50';
         document.getElementById('totalAmountDue').value = '250';
 
+        // Simulate form submission
         const form = document.getElementById('fuelQuoteForm');
-        const mockSubmitEvent = new Event('submit', { bubbles: true, cancelable: true });
-        form.dispatchEvent(mockSubmitEvent);
+    
+        // Correction: directly create a 'submit' event
+        const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
+        
+        // Add listener to prevent default behavior
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+        });
 
-        await new Promise(resolve => setTimeout(resolve, 100));
+        // Trigger the event
+        form.dispatchEvent(submitEvent);
 
-        expect(fetch).toHaveBeenCalledWith('http://example.com/updatefuelquotehistory', {
+        // Wait for asynchronous operations to complete
+        await new Promise(process.nextTick);
+
+        // Assert that fetch was called correctly
+        expect(fetch).toHaveBeenCalledWith('/updatefuelquotehistory', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
