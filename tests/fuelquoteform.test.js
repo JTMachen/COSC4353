@@ -1,4 +1,4 @@
-const { populateTable, getQuote, submitForm } = require('../public/pages/fuel quote form page/fuel quote form/createForm');
+const { populateTable, getQuote, submitForm } = require('../public/pages/fuel quote form page/fuel quote form/fuelquoteform');
 const { JSDOM } = require('jsdom');
 
 describe('Testing populateTable', () => {
