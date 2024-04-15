@@ -90,4 +90,23 @@ populateTable()
         console.error("Error: ", error);
     });
 
-    module.exports = { populateTable, getQuote, submitForm };
+// Function to check if Gallons Requested and Delivery Date fields are empty
+function checkFormEmpty() {
+    return $('#gallonsRequested').val() === '' || $('#deliveryDate').val() === '';
+}
+
+
+if (checkFormEmpty()) {
+    $('#getQuote, #submit').hide();
+}
+
+// Show/hide buttons based on form input
+$('form input[type="number"], form input[type="date"]').on('input', function() {
+    if (checkFormEmpty()) {
+        $('#getQuote, #submit').hide();
+    } else {
+        $('#getQuote, #submit').show();
+    }
+});
+
+module.exports = { populateTable, getQuote, submitForm };
