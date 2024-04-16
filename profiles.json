@@ -37,6 +37,27 @@
         "gallonsRequested": "150",
         "deliveryDate": "2024-02-20",
         "totalAmountDue": "367.5"
+      },
+      {
+        "gallonsRequested": "22",
+        "deliveryDate": "2024-04-30",
+        "totalAmountDue": "37.62"
+      }
+    ]
+  },
+  {
+    "username": "jinnha",
+    "fullName": "Jinn Ha",
+    "address1": "Blah Blah St",
+    "address2": "",
+    "city": "Houston",
+    "state": "TX",
+    "zipcode": "77083",
+    "history": [
+      {
+        "gallonsRequested": "3",
+        "deliveryDate": "2024-04-30",
+        "totalAmountDue": "5.175000000000001"
       }
     ]
   }

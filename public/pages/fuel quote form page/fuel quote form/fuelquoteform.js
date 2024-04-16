@@ -36,7 +36,7 @@ function getQuote(userData) {
     }
     const priceModule = (1.50 * (statePrice - historyPrice + 0.1 + gallonDiscount));
     document.getElementById("suggestedPrice").value = priceModule + 1.50;
-    document.getElementById("totalAmountDue").value = (priceModule + 1.50) * gallons;
+    document.getElementById("totalAmountDue").value = ((priceModule + 1.50) * gallons).toFixed(2);
 }
 
 function submitForm(userData) {
