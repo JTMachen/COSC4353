@@ -71,3 +71,10 @@ fetchFuelQuoteHistory()
     .catch(error => {
         console.error('Error:', error);
     });
+
+
+    module.exports = {
+        fetchFuelQuoteHistory,
+        populateTable
+    };
+    

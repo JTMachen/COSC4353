@@ -20,32 +20,6 @@
     "history": []
   },
   {
-    "username": "john_doe",
-    "fullName": "John Doe",
-    "address1": "123 Example St",
-    "address2": "Apt 101",
-    "city": "Katy",
-    "state": "TX",
-    "zipcode": "12345",
-    "history": [
-      {
-        "gallonsRequested": "100",
-        "deliveryDate": "2024-03-15",
-        "totalAmountDue": "250"
-      },
-      {
-        "gallonsRequested": "150",
-        "deliveryDate": "2024-02-20",
-        "totalAmountDue": "367.5"
-      },
-      {
-        "gallonsRequested": "22",
-        "deliveryDate": "2024-04-30",
-        "totalAmountDue": "37.62"
-      }
-    ]
-  },
-  {
     "username": "jinnha",
     "fullName": "Jinn Ha",
     "address1": "Blah Blah St",
@@ -58,6 +32,23 @@
         "gallonsRequested": "3",
         "deliveryDate": "2024-04-30",
         "totalAmountDue": "5.175000000000001"
+      }
+    ]
+  },
+  {
+    "username": "john_doe",
+    "fullName": "John Doe",
+    "address1": "123 Example St",
+    "address2": "Apt 101",
+    "city": "Katy",
+    "state": "TX",
+    "zipcode": "12345",
+    "history": [
+      {
+        "gallonsRequested": "10",
+        "deliveryDate": "2024-04-25",
+        "suggestedPricePerGallon": "1.71",
+        "totalAmountDue": "17.10"
       }
     ]
   }
