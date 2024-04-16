@@ -37,36 +37,6 @@
         "gallonsRequested": "150",
         "deliveryDate": "2024-02-20",
         "totalAmountDue": "367.5"
-      },
-      {
-        "gallonsRequested": "200",
-        "deliveryDate": "2024-02-22",
-        "totalAmountDue": "510"
-      },
-      {
-        "gallonsRequested": "9819778",
-        "deliveryDate": "2024-04-22",
-        "totalAmountDue": "16644523.71"
-      },
-      {
-        "gallonsRequested": "1500",
-        "deliveryDate": "2024-04-30",
-        "totalAmountDue": "2542.5"
-      },
-      {
-        "gallonsRequested": "",
-        "deliveryDate": "",
-        "totalAmountDue": "0"
-      },
-      {
-        "gallonsRequested": "",
-        "deliveryDate": "",
-        "totalAmountDue": "0"
-      },
-      {
-        "gallonsRequested": "4",
-        "deliveryDate": "2024-04-25",
-        "totalAmountDue": "6.84"
       }
     ]
   }

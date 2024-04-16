@@ -1,6 +1,6 @@
+// Function to fetch fuel quote history from the server
 function fetchFuelQuoteHistory() {
-    // Fetch data from JSON database using fetch API
-    return fetch('/fuelquotehistory')
+    return fetch('/profiles')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -11,13 +11,11 @@ function fetchFuelQuoteHistory() {
             // Retrieve the logged-in user from session storage
             const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
 
-            // Filter the data based on the logged-in user's username
-            const filteredData = data.filter(function(quote) {
-                return quote.username === loggedInUser.username;
-            });
+            // Find the user's profile in the data
+            const userProfile = data.find(profile => profile.username === loggedInUser.username);
 
-            // Return the filtered data
-            return filteredData;
+            // Return the history data of the user
+            return userProfile ? userProfile.history : [];
         })
         .catch(error => {
             console.error('Error fetching data:', error);
@@ -26,6 +24,7 @@ function fetchFuelQuoteHistory() {
         });
 }
 
+// Function to populate the table with fuel quote history
 function populateTable(data) {
     const tableBody = document.querySelector('#fuelQuoteTable tbody');
     tableBody.innerHTML = ''; // Clear previous data
@@ -43,14 +42,12 @@ function populateTable(data) {
     });
 }
 
-// Call the function and handle the returned Promise
+// Call the function and populate the table
 fetchFuelQuoteHistory()
-    .then(filteredData => {
-        console.log(filteredData);
-        populateTable(filteredData);
+    .then(historyData => {
+        console.log(historyData);
+        populateTable(historyData);
     })
     .catch(error => {
         console.error('Error:', error);
     });
-
-module.exports = fetchFuelQuoteHistory;
