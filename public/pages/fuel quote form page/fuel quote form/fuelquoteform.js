@@ -45,6 +45,7 @@ function submitForm(userData) {
         {
             gallonsRequested: document.getElementById("gallonsRequested").value,
             deliveryDate: document.getElementById("deliveryDate").value,
+            suggestedPricePerGallon: document.getElementById("suggestedPrice").value,
             totalAmountDue: document.getElementById("totalAmountDue").value
         }
     )
@@ -77,6 +78,8 @@ populateTable()
         address1.value = userData.address1;
         const address2 = document.getElementById("address2");
         address2.value = userData.address2;
+        const state = document.getElementById("state");
+        state.value = userData.state;
         const getQuoteButton = document.getElementById("getQuote");
         getQuoteButton.onclick = function () {
             getQuote(userData);
