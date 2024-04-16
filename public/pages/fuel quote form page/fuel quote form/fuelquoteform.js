@@ -92,21 +92,28 @@ populateTable()
 
 // Function to check if Gallons Requested and Delivery Date fields are empty
 function checkFormEmpty() {
-    return $('#gallonsRequested').val() === '' || $('#deliveryDate').val() === '';
+    return document.getElementById('gallonsRequested').value === '' || document.getElementById('deliveryDate').value === '';
 }
 
-
+// Hide buttons if form fields are empty
 if (checkFormEmpty()) {
-    $('#getQuote, #submit').hide();
+    document.getElementById('getQuote').style.display = 'none';
+    document.getElementById('submit').style.display = 'none';
 }
 
 // Show/hide buttons based on form input
-$('form input[type="number"], form input[type="date"]').on('input', function() {
-    if (checkFormEmpty()) {
-        $('#getQuote, #submit').hide();
-    } else {
-        $('#getQuote, #submit').show();
-    }
+document.querySelectorAll('form input[type="number"], form input[type="date"]').forEach(function(input) {
+    input.addEventListener('input', function() {
+        if (checkFormEmpty()) {
+            document.getElementById('getQuote').style.display = 'none';
+            document.getElementById('submit').style.display = 'none';
+        } else {
+            document.getElementById('getQuote').style.display = 'inline-block';
+            document.getElementById('submit').style.display = 'inline-block';
+        }
+    });
 });
+
+
 
 module.exports = { populateTable, getQuote, submitForm };
