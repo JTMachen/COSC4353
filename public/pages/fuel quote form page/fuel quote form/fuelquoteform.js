@@ -71,32 +71,38 @@ function submitForm(userData) {
     });
 }
 
+function populate(userData) {
+     // Select the form
+     const address1 = document.getElementById("address1");
+     address1.value = userData.address1;
+     const address2 = document.getElementById("address2");
+     address2.value = userData.address2;
+     const state = document.getElementById("state");
+     state.value = userData.state;
+     const getQuoteButton = document.getElementById("getQuote");
+     getQuoteButton.onclick = function () {
+         getQuote(userData);
+     }
+     const submitButton = document.getElementById("submit");
+     submitButton.onclick = function () {
+         submitForm(userData);
+     }
+}
+
 populateTable()
     .then(userData => {
-        // Select the form
-        const address1 = document.getElementById("address1");
-        address1.value = userData.address1;
-        const address2 = document.getElementById("address2");
-        address2.value = userData.address2;
-        const state = document.getElementById("state");
-        state.value = userData.state;
-        const getQuoteButton = document.getElementById("getQuote");
-        getQuoteButton.onclick = function () {
-            getQuote(userData);
-        }
-        const submitButton = document.getElementById("submit");
-        submitButton.onclick = function () {
-            submitForm(userData);
-        }
+       populate(userData);
     })
     .catch(error => {
         console.error("Error: ", error);
     });
 
 // Function to check if Gallons Requested and Delivery Date fields are empty
+/*
 function checkFormEmpty() {
     return document.getElementById('gallonsRequested').value === '' || document.getElementById('deliveryDate').value === '';
 }
+
 
 // Hide buttons if form fields are empty
 if (checkFormEmpty()) {
@@ -116,7 +122,7 @@ document.querySelectorAll('form input[type="number"], form input[type="date"]').
         }
     });
 });
+*/
 
 
-
-module.exports = { populateTable, getQuote, submitForm };
+module.exports = { populateTable, getQuote, submitForm, populate };

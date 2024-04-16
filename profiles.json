@@ -44,12 +44,6 @@
     "state": "TX",
     "zipcode": "12345",
     "history": [
-      {
-        "gallonsRequested": "10",
-        "deliveryDate": "2024-04-25",
-        "suggestedPricePerGallon": "1.71",
-        "totalAmountDue": "17.10"
-      }
     ]
   }
 ]
