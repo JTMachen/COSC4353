@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1713292865003" clover="3.2.0">
-  <project timestamp="1713292865003" name="All files">
+<coverage generated="1713292992511" clover="3.2.0">
+  <project timestamp="1713292992511" name="All files">
     <metrics statements="68" coveredstatements="62" conditionals="30" coveredconditionals="21" methods="20" coveredmethods="20" elements="118" coveredelements="103" complexity="0" loc="68" ncloc="68" packages="3" files="3" classes="3"/>
     <package name="fuel quote form page.fuel quote history">
       <metrics statements="23" coveredstatements="23" conditionals="21" coveredconditionals="15" methods="9" coveredmethods="9"/>
