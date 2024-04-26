@@ -8,6 +8,7 @@ h4{
 }
 .button{
     margin-top: 60px;
+    margin-left: 50px;
     text-align:center;
     font-size: 30px;
     width: 300px;
@@ -23,7 +24,4 @@ h4{
     justify-content: center;
     align-items: center;
 
-}
-#fuelQuoteButton{
-    margin-left: 50px;
 }
