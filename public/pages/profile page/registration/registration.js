@@ -1,13 +1,18 @@
 function prepareData() {
     // Validate the data on the backend
     const fullNameInput = document.getElementById("name").value;
+    if (fullNameInput.match(/\d+/) !== null) { 
+        alert("Please enter valid name");
+        document.getElementById("name").value = '';
+        return false; 
+    }
     const address1Input = document.getElementById("address1").value;
     const address2Input = document.getElementById("address2").value;
     const cityInput = document.getElementById("city").value;
     const stateInput = document.getElementById("state").value;
     const zipCodeInput = document.getElementById("zip_code").value;
     if (!/^\d*$/.test(parseInt(zipCodeInput)) || zipCodeInput.length < 5 || zipCodeInput.length > 9) {
-        alert("Please enter a valid Zip Code");
+        alert("Please enter a valid zip code");
         return false;
     }
     

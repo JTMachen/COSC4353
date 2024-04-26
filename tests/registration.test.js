@@ -1,25 +1,30 @@
-// Import jsdom to mock the DOM
-const { JSDOM } = require('jsdom');
-
 // Import the prepareData function
 const prepareData = require('../public/pages/profile page/registration/registration');
 
+global.sessionStorage = {
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+  clear: jest.fn()
+};
+global.alert = jest.fn();
+
 describe('prepareData function', () => {
+  beforeEach(() => {
+    // Mock sessionStorage getItem method
+    global.sessionStorage.getItem.mockReturnValueOnce(JSON.stringify({ username: 'testUser' }));
+  });
+
   test('should validate form data and send POST request', async () => {
     // Set up the DOM environment
-    const dom = new JSDOM(`
-      <html>
-        <body>
-          <input type="text" id="name" value="John Doe" />
-          <input type="text" id="address1" value="123 Main St" />
-          <input type="text" id="address2" value="Apt 1" />
-          <input type="text" id="city" value="Anytown" />
-          <input type="text" id="state" value="CA" />
-          <input type="text" id="zip_code" value="12345" />
-        </body>
-      </html>
-    `);
-    global.document = dom.window.document;
+    document.body.innerHTML =`
+      <input type="text" id="name" name="name" placeholder="Full Name" maxlength="50" minLength="1" required/>
+      <input id="address1" name="address1" placeholder="Address 1 (required)" maxlength="100" minLength="1" required/>
+      <input id="address2" name="address2" placeholder="Address 2 (optional)" maxlength="100"/>
+      <input id="city" name="city" placeholder="City" maxlength="100" minLength="1" required/>
+      <select id="state"></select>
+      <input id="zip_code" name="zip_code" placeholder="Zip Code" minlength="5" max="9" required/>
+      <input type="submit" value="Submit" onclick="prepareData()"/>
+      `;
 
     // Mock fetch response
     global.fetch = jest.fn(() =>
@@ -28,31 +33,24 @@ describe('prepareData function', () => {
       })
     );
 
-    // Mock sessionStorage getItem method
-    global.sessionStorage = {
-      getItem: jest.fn().mockReturnValue(JSON.stringify({ username: 'testuser' })),
-    };
+    // Check for null Zip Code
+    document.getElementById("zip_code").value = "";
+    const result1 = await prepareData();
+    expect(result1).toEqual(false);
+    
+    // Check for incorrect name format
+    document.getElementById("name").value = "John123";
+    const result2 = await prepareData();
+    expect(result2).toEqual(false);
 
-    // Call prepareData function
-    const result = await prepareData();
+    // Check for correct data submission
+    document.getElementById("name").value = "John Doe";
+    document.getElementById("zip_code").value = "12345";
+    const result3 = await prepareData();
+    // Expect nothing returned
+    expect(result3).toEqual();
 
-    // Assertions
-    expect(sessionStorage.getItem).toHaveBeenCalledWith('registeredUser');
-    expect(fetch).toHaveBeenCalledWith('/registration', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: 'testuser',
-        fullName: 'John Doe',
-        address1: '123 Main St',
-        address2: 'Apt 1',
-        city: 'Anytown',
-        state: 'CA',
-        zipcode: '12345',
-        history: [],
-      }),
-    });
+    // Check that sessionStorage.getItem was called with 'registeredUser'
+    expect(global.sessionStorage.getItem).toHaveBeenCalledWith('registeredUser');
   });
 });

@@ -8,11 +8,11 @@
     "password": "$2b$10$nd1bmDS3dJ48qSzGmYPBW.kvUs5IcAx8ZLqy96hXF.kswQ6Lh6cyG"
   },
   {
-    "username": "username",
-    "password": "$2b$10$AUBPwTsosV7EvI0IgcQ3F.fTXiE6Dr6y.LNayh5IJX1U0GGKK9PrC"
-  },
-  {
     "username": "jinnha",
     "password": "$2b$10$jThOSi0tf3T1OXnxSJQZf.JaZ8hf4tUGtiovgK/Bu1tV8oBZxg5k2"
+  },
+  {
+    "username": "john_doe123",
+    "password": "$2b$10$4tXRKy3oIZS9DukaJOPnOegKVbupIfDQGrc9e5/XYjxqhbiX9kRSO"
   }
 ]

@@ -98,31 +98,26 @@ populateTable()
     });
 
 // Function to check if Gallons Requested and Delivery Date fields are empty
-/*
+
+// Refactored checkFormEmpty function to handle potential null values
 function checkFormEmpty() {
-    return document.getElementById('gallonsRequested').value === '' || document.getElementById('deliveryDate').value === '';
-}
-
-
-// Hide buttons if form fields are empty
-if (checkFormEmpty()) {
-    document.getElementById('getQuote').style.display = 'none';
-    document.getElementById('submit').style.display = 'none';
+    const gallonsRequestedInput = document.getElementById('gallonsRequested');
+    const deliveryDateInput = document.getElementById('deliveryDate');
+    return gallonsRequestedInput.value === '' || deliveryDateInput.value === '';
 }
 
 // Show/hide buttons based on form input
 document.querySelectorAll('form input[type="number"], form input[type="date"]').forEach(function(input) {
     input.addEventListener('input', function() {
         if (checkFormEmpty()) {
-            document.getElementById('getQuote').style.display = 'none';
-            document.getElementById('submit').style.display = 'none';
+            document.getElementById('getQuote').disabled = true;
+            document.getElementById('submit').disabled = true;
         } else {
-            document.getElementById('getQuote').style.display = 'inline-block';
-            document.getElementById('submit').style.display = 'inline-block';
+            document.getElementById('getQuote').disabled = false;
+            document.getElementById('submit').disabled = false;
         }
     });
 });
-*/
 
 
-module.exports = { populateTable, getQuote, submitForm, populate };
+module.exports = { populateTable, getQuote, submitForm, populate, checkFormEmpty };

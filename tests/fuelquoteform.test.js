@@ -1,5 +1,5 @@
-const { populateTable, getQuote, submitForm, populate } = require('../public/pages/fuel quote form page/fuel quote form/fuelquoteform');
-const { JSDOM } = require('jsdom');
+// Import the necessary functions from fuelquoteform.js
+const { populateTable, getQuote, submitForm, populate, checkFormEmpty } = require('../public/pages/fuel quote form page/fuel quote form/fuelquoteform');
 
 describe('Testing populateTable', () => {
     beforeEach(() => {
@@ -25,22 +25,10 @@ describe('Testing populateTable', () => {
         global.sessionStorage = {
             getItem: jest.fn(() => JSON.stringify({ loggedInUser: { username: 'testuser' } }))
         };
-    });
 
-
-    test('Should populate form fields and attach event handlers', async () => {
-        const userData = {
-            username: 'testUser',
-            address1: '123 Test St',
-            city: 'Test City',
-            state: 'TX',
-            zipcode: '12345',
-            history: [
-            ]
-        }
         // Set up filled in values to test
-        document.body.innerHTML =`
-            <input type="number" id="gallonsRequested" name="gallonsRequested" required><br><br>
+        document.body.innerHTML = `
+            <input type="number" id="gallonsRequested" required><br><br>
             <input type="text" id="address1" readonly><br><br>
             <input type="text" id="address2" readonly><br><br>
             <input type="text" id="state" readonly><br><br>
@@ -49,9 +37,26 @@ describe('Testing populateTable', () => {
             <input type="number" id="totalAmountDue" readonly placeholder="Total amount"><br><br>
             <input type="button" id="getQuote" value="Get Quote">
             <input type="submit" id="submit" value="Submit">
-        `
+        `;
+    });
+
+    test('Should populate form fields and attach event handlers', async () => {
+        let userData = {
+            username: 'testUser',
+            address1: '123 Test St',
+            city: 'Test City',
+            state: 'TX',
+            zipcode: '12345',
+            history: []
+        }
+
         await populateTable();
         await populate(userData);
+
+        // Set the values of gallonsRequested and deliveryDate
+        document.getElementById('gallonsRequested').value = 500;
+        document.getElementById('deliveryDate').value = '2024-04-15';
+
         // Simulate button clicks and check if event handlers are attached
         const getQuoteButton = document.getElementById('getQuote');
         const submitButton = document.getElementById('submit');
@@ -66,20 +71,49 @@ describe('Testing populateTable', () => {
         expect(typeof getQuoteClickHandler).toBe('function');
         expect(typeof submitClickHandler).toBe('function');
 
-        document.getElementById('gallonsRequested').value = 500;
-        document.getElementById('deliveryDate').value = '2024-04-15';
-
         // Simulate button clicks and check if they trigger the expected event handlers
-        
         getQuote(userData);
-        const suggestedPriceInput = document.getElementById('suggestedPrice');
-        const totalAmountDueInput = document.getElementById('totalAmountDue');
+        let suggestedPriceInput = document.getElementById('suggestedPrice');
+        let totalAmountDueInput = document.getElementById('totalAmountDue');
 
         expect(suggestedPriceInput.value).toBe("1.725");
         expect(totalAmountDueInput.value).toBe("862.50");
 
+        // Change the user's state, history, and gallons requested to account for if-else cases
+        userData = {
+            username: 'testUser',
+            address1: '123 Test St',
+            city: 'Test City',
+            state: 'AL',
+            zipcode: '12345',
+            history: [
+                {
+                    "gallonsRequested": "3",
+                    "deliveryDate": "2024-04-30",
+                    "totalAmountDue": "5.175000000000001"
+                  }
+            ]
+        }
+        document.getElementById('gallonsRequested').value = 5000;
+        getQuote(userData);
+        suggestedPriceInput = document.getElementById('suggestedPrice');
+        totalAmountDueInput = document.getElementById('totalAmountDue');
+
+        expect(suggestedPriceInput.value).toBe("1.725");
+        expect(totalAmountDueInput.value).toBe("8625.00");
+        
         submitForm(userData);
-        // Add assertions for submitForm event handler, if any
+    });
+
+    test('Should disable buttons if form fields are empty', () => {
+        expect(checkFormEmpty()).toBe(true);
+        
+        // Simulate input in the form fields
+        document.getElementById('gallonsRequested').value = 500;
+        document.getElementById('deliveryDate').value = '2024-04-15';
+
+        // Check if buttons are enabled after input
+        expect(checkFormEmpty()).toBe(false);
     });
 
     test('Should handle error when fetching data', async () => {
